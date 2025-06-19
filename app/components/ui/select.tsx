@@ -23,8 +23,10 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     );
   }
 );
+
 Select.displayName = "Select";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface SelectItemProps extends React.OptionHTMLAttributes<HTMLOptionElement> {}
 
 const SelectItem = ({ children, ...props }: SelectItemProps) => {

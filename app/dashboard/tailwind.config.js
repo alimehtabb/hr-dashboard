@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -26,7 +26,7 @@ module.exports = {
         accent: "oklch(var(--accent) / <alpha-value>)",
         "accent-foreground": "oklch(var(--accent-foreground) / <alpha-value>)",
         destructive: "oklch(var(--destructive) / <alpha-value>)",
-        sidebar: "oklch(var(--sidebar) / <alpha-value>)",
+        "sidebar": "oklch(var(--sidebar) / <alpha-value>)",
         "sidebar-foreground": "oklch(var(--sidebar-foreground) / <alpha-value>)",
         "sidebar-primary": "oklch(var(--sidebar-primary) / <alpha-value>)",
         "sidebar-primary-foreground": "oklch(var(--sidebar-primary-foreground) / <alpha-value>)",
@@ -34,13 +34,6 @@ module.exports = {
         "sidebar-accent-foreground": "oklch(var(--sidebar-accent-foreground) / <alpha-value>)",
         "sidebar-border": "oklch(var(--sidebar-border) / <alpha-value>)",
         "sidebar-ring": "oklch(var(--sidebar-ring) / <alpha-value>)",
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-      },
-      fontFamily: {
-        sans: ["var(--font-sans)"],
-        mono: ["var(--font-mono)"],
       },
     },
   },

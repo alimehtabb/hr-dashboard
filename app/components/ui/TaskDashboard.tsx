@@ -1,14 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import  Button  from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
-
+import Button from "@/components/ui/button";
 
 interface Task {
   id: number;
@@ -78,36 +75,36 @@ const TaskTable = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="min-w-full border text-sm text-gray-800 bg-white shadow rounded">
-              <thead className="bg-slate-100">
+            <table className="min-w-full border text-sm text-muted bg-background shadow rounded">
+              <thead className="bg-accent text-accent-foreground">
                 <tr>
-                  <th className="text-left px-4 py-2 border-b">Employee</th>
-                  <th className="text-left px-4 py-2 border-b">Department</th>
-                  <th className="text-left px-4 py-2 border-b">Task</th>
-                  <th className="text-left px-4 py-2 border-b">Deadline</th>
-                  <th className="text-center px-4 py-2 border-b">Completed</th>
-                  <th className="text-center px-4 py-2 border-b">Points</th>
+                  <th className="text-left px-4 py-2 border-border border-b">Employee</th>
+                  <th className="text-left px-4 py-2 border-border border-b">Department</th>
+                  <th className="text-left px-4 py-2 border-border border-b">Task</th>
+                  <th className="text-left px-4 py-2 border-border border-b">Deadline</th>
+                  <th className="text-center px-4 py-2 border-border border-b">Completed</th>
+                  <th className="text-center px-4 py-2 border-border border-b">Points</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredTasks.map((task) => (
                   <tr key={task.id}>
-                    <td className="px-4 py-2 border-b">{task.employee}</td>
-                    <td className="px-4 py-2 border-b">{task.department}</td>
-                    <td className="px-4 py-2 border-b">{task.task}</td>
-                    <td className="px-4 py-2 border-b">{task.deadline}</td>
-                    <td className="text-center px-4 py-2 border-b">
+                    <td className="px-4 py-2 border-border border-b">{task.employee}</td>
+                    <td className="px-4 py-2 border-border border-b">{task.department}</td>
+                    <td className="px-4 py-2 border-border border-b">{task.task}</td>
+                    <td className="px-4 py-2 border-border border-b">{task.deadline}</td>
+                    <td className="text-center px-4 py-2 border-border border-b">
                       <Checkbox
                         checked={task.completed}
                         onCheckedChange={() => toggleCompletion(task.id)}
                       />
                     </td>
-                    <td className="text-center px-4 py-2 border-b">{task.points}</td>
+                    <td className="text-center px-4 py-2 border-border border-b">{task.points}</td>
                   </tr>
                 ))}
                 {filteredTasks.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="text-center text-gray-500 p-4">
+                    <td colSpan={6} className="text-center text-muted-foreground p-4">
                       No matching tasks found.
                     </td>
                   </tr>
@@ -121,7 +118,7 @@ const TaskTable = () => {
       <TabsContent value="leaderboard">
         <div className="space-y-2">
           <h3 className="font-semibold text-lg">Top Performers</h3>
-          <ul className="list-decimal ml-6 text-gray-800">
+          <ul className="list-decimal ml-6 text-foreground">
             {leaderboard.map((task, index) => (
               <li key={index}>
                 {task.employee} ({task.department}) — {task.points} pts
@@ -135,7 +132,7 @@ const TaskTable = () => {
         <div className="space-y-4">
           <h3 className="font-semibold text-lg">Department AI Suggestions</h3>
           <Button variant="outline" onClick={generateSuggestions}>Generate New Suggestions</Button>
-          <ul className="list-disc ml-6 text-gray-800">
+          <ul className="list-disc ml-6 text-foreground">
             {suggestions.map((s, i) => (
               <li key={i}>{s}</li>
             ))}
