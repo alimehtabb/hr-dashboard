@@ -10,48 +10,53 @@ import DepartmentSuggestions from "@/components/ui/DepartmentSuggestions"
 
 export default function DashboardPage() {
   return (
-    <main className="p-6 max-w-7xl mx-auto space-y-8">
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="col-span-1 md:col-span-2 flex flex-col">
-          <CardContent>
-            <h2 className="text-xl font-semibold mb-4">Department Overview</h2>
+    <main className="min-h-screen bg-muted p-6 space-y-6">
+      <h1 className="text-3xl font-bold text-primary">AI-Powered HR Dashboard</h1>
+
+      {/* Top Row: Chart + Suggestions */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card>
+          <CardContent className="p-4">
+            <h2 className="text-xl font-semibold mb-2">Department Health</h2>
             <DepartmentChart />
           </CardContent>
         </Card>
 
-        <Card className="flex flex-col">
-          <CardContent>
-            <h2 className="text-xl font-semibold mb-4">Suggestions</h2>
+        <Card>
+          <CardContent className="p-4 space-y-2">
+            <h2 className="text-xl font-semibold">Department Suggestions</h2>
             <DepartmentSuggestions />
           </CardContent>
         </Card>
-      </section>
+      </div>
 
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 flex flex-col">
-          <CardContent>
-            <h2 className="text-xl font-semibold mb-4">Assign Tasks</h2>
+      {/* Middle Row: Task Assignment + Notes */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card>
+          <CardContent className="p-4 space-y-4">
+            <h2 className="text-xl font-semibold">Assign Tasks</h2>
             <TaskAssignForm />
+            <Button className="w-full">Assign Tasks</Button>
+            <Button variant="outline" className="w-full">View Leaderboard</Button>
           </CardContent>
         </Card>
 
-        <Card className="flex flex-col">
-          <CardContent>
-            <h2 className="text-xl font-semibold mb-4">Notes</h2>
+        <Card>
+          <CardContent className="p-4">
+            <h2 className="text-xl font-semibold mb-2">Internal Notes</h2>
             <Textarea placeholder="Add your notes here..." rows={6} className="resize-none" />
             <Button className="mt-4 w-full">Save Notes</Button>
           </CardContent>
         </Card>
-      </section>
+      </div>
 
-      <section>
-        <Card>
-          <CardContent>
-            <h2 className="text-xl font-semibold mb-4">Task Table</h2>
-            <TaskTable />
-          </CardContent>
-        </Card>
-      </section>
+      {/* Bottom Row: Task Table */}
+      <Card>
+        <CardContent className="p-4">
+          <h2 className="text-xl font-semibold mb-4">Task Table</h2>
+          <TaskTable />
+        </CardContent>
+      </Card>
     </main>
   )
 }
