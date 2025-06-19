@@ -3,9 +3,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  children: React.ReactNode;
-}
+type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement>;
 
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, children, ...props }, ref) => {
@@ -13,7 +11,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
       <select
         ref={ref}
         className={cn(
-          "w-full rounded-md border border-input bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring",
+          "w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring",
           className
         )}
         {...props}
@@ -26,8 +24,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
 
 Select.displayName = "Select";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface SelectItemProps extends React.OptionHTMLAttributes<HTMLOptionElement> {}
+type SelectItemProps = React.OptionHTMLAttributes<HTMLOptionElement>;
 
 const SelectItem = ({ children, ...props }: SelectItemProps) => {
   return <option {...props}>{children}</option>;
