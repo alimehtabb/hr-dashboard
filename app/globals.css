@@ -1,59 +1,49 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/preflight"; /* replaces @tailwind base */
+@import "tailwindcss/utilities"; /* replaces both components and utilities in v4 */
 
-@layer base {
-  :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.129 0.042 264.695);
-    --border: oklch(0.929 0.013 255.508);
-    --input: oklch(0.929 0.013 255.508);
-    --ring: oklch(0.704 0.04 256.788);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.129 0.042 264.695);
-    --accent: oklch(0.968 0.007 247.896);
-    --accent-foreground: oklch(0.129 0.042 264.695);
-    --muted: oklch(0.968 0.007 247.896);
-    --muted-foreground: oklch(0.554 0.046 257.417);
-    --primary: oklch(0.129 0.042 264.695);
-    --primary-foreground: oklch(0.984 0.003 247.858);
-    --destructive: oklch(0.577 0.245 27.325);
-    --radius: 0.625rem;
-  }
+/* Global theme overrides */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.129 0.042 264.695);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.129 0.042 264.695);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --destructive: oklch(0.577 0.245 27.325);
+  --radius: 0.625rem;
+}
 
-  .dark {
-    --background: oklch(0.129 0.042 264.695);
-    --foreground: oklch(0.984 0.003 247.858);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.551 0.027 264.364);
-    --card: oklch(0.208 0.042 265.755);
-    --card-foreground: oklch(0.984 0.003 247.858);
-    --accent: oklch(0.279 0.041 260.031);
-    --accent-foreground: oklch(0.984 0.003 247.858);
-  }
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans, sans-serif);
+  margin: 0;
+  padding: 0;
+}
 
-  body {
-    @apply bg-background text-foreground font-sans antialiased;
-  }
+* {
+  border-color: var(--border);
+  outline-color: var(--ring);
+  box-sizing: border-box;
+}
 
-  * {
-    @apply border-border outline-ring/50;
-  }
+/* Optional: Cards, Buttons, Headings */
+.card {
+  border-radius: 1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  background-color: var(--card);
+  color: var(--card-foreground);
+  padding: 1.5rem;
+}
 
-  input, select, textarea {
-    @apply border border-input rounded px-3 py-2 w-full;
-  }
-
-  .card {
-    @apply rounded-2xl shadow-md border bg-card text-card-foreground;
-  }
-
-  h1, h2, h3 {
-    @apply font-semibold text-foreground;
-  }
-
-  table {
-    @apply w-full text-sm text-left border-collapse rounded shadow;
-  }
+h1, h2, h3 {
+  font-weight: 600;
+  color: var(--foreground);
 }
