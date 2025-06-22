@@ -1,7 +1,6 @@
-@import "tailwindcss/preflight"; /* replaces @tailwind base */
-@import "tailwindcss/utilities"; /* replaces both components and utilities in v4 */
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
 
-/* Global theme overrides */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
@@ -32,18 +31,4 @@ body {
   border-color: var(--border);
   outline-color: var(--ring);
   box-sizing: border-box;
-}
-
-/* Optional: Cards, Buttons, Headings */
-.card {
-  border-radius: 1rem;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  background-color: var(--card);
-  color: var(--card-foreground);
-  padding: 1.5rem;
-}
-
-h1, h2, h3 {
-  font-weight: 600;
-  color: var(--foreground);
 }
