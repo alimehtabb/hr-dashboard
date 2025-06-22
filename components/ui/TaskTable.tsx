@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Button from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import Button from "@/components/ui/button";
 
 interface Task {
   id: number;
@@ -23,21 +23,15 @@ const dummyTasks: Task[] = [
   { id: 3, employee: "Nayem Hosen", department: "IT", task: "Design Eid flyer", deadline: "2025-06-30", completed: false, points: 10 },
 ];
 
-const CELL_CLASS = "px-4 py-2 border-b text-gray-800";
-const HEADER_CLASS = "bg-slate-100 text-left";
-
-const TaskTable = () => {
+export default function TaskTable() {
   const [search, setSearch] = useState("");
   const [tasks, setTasks] = useState<Task[]>(dummyTasks);
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  const toggleCompletion = (id: number) => {
+  const toggleCompletion = (id: number) =>
     setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
+      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
     );
-  };
 
   const generateSuggestions = () => {
     const ideas = [
@@ -45,24 +39,16 @@ const TaskTable = () => {
       "Introduce department-based goal charts",
       "Use color-coded badges for task completion",
       "Reward idea submissions monthly",
-      "Gamify attendance tracking with streaks"
+      "Gamify attendance tracking with streaks",
     ];
-    const shuffled = [...ideas].sort(() => 0.5 - Math.random());
-    setSuggestions(shuffled.slice(0, 3));
+    setSuggestions(ideas.sort(() => 0.5 - Math.random()).slice(0, 3));
   };
 
-  const filteredTasks = useMemo(
-    () =>
-      tasks.filter((task) =>
-        task.employee.toLowerCase().includes(search.toLowerCase())
-      ),
+  const filtered = useMemo(
+    () => tasks.filter((t) => t.employee.toLowerCase().includes(search.toLowerCase())),
     [search, tasks]
   );
-
-  const leaderboard = useMemo(
-    () => [...tasks].sort((a, b) => b.points - a.points),
-    [tasks]
-  );
+  const leaderboard = useMemo(() => [...tasks].sort((a, b) => b.points - a.points), [tasks]);
 
   return (
     <Tabs defaultValue="tasks" className="mt-6">
@@ -80,44 +66,42 @@ const TaskTable = () => {
               id="filter"
               placeholder="e.g. Mehtab"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />
           </div>
-
           <div className="overflow-x-auto">
             <table className="min-w-full border text-sm bg-white shadow rounded">
-              <thead className={HEADER_CLASS}>
+              <thead className="bg-accent text-accent-foreground">
                 <tr>
-                  <th scope="col" className={`${CELL_CLASS} text-left`}>Employee</th>
-                  <th scope="col" className={`${CELL_CLASS} text-left`}>Department</th>
-                  <th scope="col" className={`${CELL_CLASS} text-left`}>Task</th>
-                  <th scope="col" className={`${CELL_CLASS} text-left`}>Deadline</th>
-                  <th scope="col" className={`${CELL_CLASS} text-center`}>Completed</th>
-                  <th scope="col" className={`${CELL_CLASS} text-center`}>Points</th>
+                  <th className="px-4 py-2 border-border border-b text-left">Employee</th>
+                  <th className="px-4 py-2 border-border border-b text-left">Department</th>
+                  <th className="px-4 py-2 border-border border-b text-left">Task</th>
+                  <th className="px-4 py-2 border-border border-b text-left">Deadline</th>
+                  <th className="px-4 py-2 border-border border-b text-center">Completed</th>
+                  <th className="px-4 py-2 border-border border-b text-center">Points</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredTasks.length === 0 ? (
+                {filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center text-gray-500 p-4">
+                    <td colSpan={6} className="p-4 text-center text-muted-foreground">
                       No matching tasks found.
                     </td>
                   </tr>
                 ) : (
-                  filteredTasks.map((task) => (
+                  filtered.map((task) => (
                     <tr key={task.id}>
-                      <td className={`${CELL_CLASS} text-left`}>{task.employee}</td>
-                      <td className={`${CELL_CLASS} text-left`}>{task.department}</td>
-                      <td className={`${CELL_CLASS} text-left`}>{task.task}</td>
-                      <td className={`${CELL_CLASS} text-left`}>{task.deadline}</td>
-                      <td className={`${CELL_CLASS} text-center`}>
+                      <td className="px-4 py-2 border-border border-b">{task.employee}</td>
+                      <td className="px-4 py-2 border-border border-b">{task.department}</td>
+                      <td className="px-4 py-2 border-border border-b">{task.task}</td>
+                      <td className="px-4 py-2 border-border border-b">{task.deadline}</td>
+                      <td className="px-4 py-2 border-border border-b text-center">
                         <Checkbox
                           checked={task.completed}
-                          aria-label={`Mark task for ${task.employee} as completed`}
-                          onCheckedChange={() => toggleCompletion(task.id)}
+                          onChange={() => toggleCompletion(task.id)}
                         />
                       </td>
-                      <td className={`${CELL_CLASS} text-center`}>{task.points}</td>
+                      <td className="px-4 py-2 border-border border-b text-center">{task.points}</td>
                     </tr>
                   ))
                 )}
@@ -129,11 +113,11 @@ const TaskTable = () => {
 
       <TabsContent value="leaderboard">
         <div className="space-y-2">
-          <h3 className="font-semibold text-lg">Top Performers</h3>
-          <ul className="list-decimal ml-6 text-gray-800">
-            {leaderboard.map((task, index) => (
-              <li key={index}>
-                {task.employee} ({task.department}) — {task.points} pts
+          <h3 className="text-lg font-semibold">Top Performers</h3>
+          <ul className="list-decimal ml-6 text-foreground">
+            {leaderboard.map((t, i) => (
+              <li key={i}>
+                {t.employee} — {t.points} pts
               </li>
             ))}
           </ul>
@@ -142,11 +126,11 @@ const TaskTable = () => {
 
       <TabsContent value="ai">
         <div className="space-y-4">
-          <h3 className="font-semibold text-lg">Department AI Suggestions</h3>
+          <h3 className="text-lg font-semibold">AI Suggestions</h3>
           <Button variant="outline" onClick={generateSuggestions}>
             Generate New Suggestions
           </Button>
-          <ul className="list-disc ml-6 text-gray-800">
+          <ul className="list-disc ml-6 text-foreground">
             {suggestions.map((s, i) => (
               <li key={i}>{s}</li>
             ))}
@@ -155,6 +139,4 @@ const TaskTable = () => {
       </TabsContent>
     </Tabs>
   );
-};
-
-export default TaskTable;
+}

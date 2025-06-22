@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,107 +19,99 @@ export default function TaskAssignForm() {
     priority: "Normal",
   });
 
-  const handleChange = (key: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [key]: value }));
-  };
+  function handleChange(key: keyof typeof formData, value: string) {
+    setFormData(prev => ({ ...prev, [key]: value }));
+  }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    // Basic validation example
     if (!formData.employee || !formData.department || !formData.task) {
       alert("Please fill in employee, department and task fields.");
       return;
     }
-
     console.log("Assigned Task:", formData);
     alert("Task Assigned! (Mock)");
 
-    // Reset form
-    setFormData({
-      employee: "",
-      department: "",
-      task: "",
-      due: "",
-      priority: "Normal",
-    });
-
-    // TODO: connect to backend/store
-  };
+    setFormData({ employee: "", department: "", task: "", due: "", priority: "Normal" });
+  }
 
   return (
     <Card className="w-full">
       <CardContent className="p-6 space-y-4">
         <h2 className="text-xl font-semibold">Assign Task</h2>
-
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid gap-2">
+          <div className="grid gap-1">
             <Label htmlFor="employee">Employee Name</Label>
             <Input
               id="employee"
               placeholder="e.g. Mehtab Ali"
               value={formData.employee}
-              onChange={(e) => handleChange("employee", e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChange("employee", e.target.value)
+              }
               required
             />
           </div>
-
-          <div className="grid gap-2">
+          <div className="grid gap-1">
             <Label htmlFor="department">Department</Label>
             <Select
               id="department"
               value={formData.department}
-              onChange={(e) => handleChange("department", e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                handleChange("department", e.target.value)
+              }
               required
             >
-              <option value="">Select Department</option>
-              {departments.map((dept) => (
+              <SelectItem value="">Select Department</SelectItem>
+              {departments.map(dept => (
                 <SelectItem key={dept} value={dept}>
                   {dept}
                 </SelectItem>
               ))}
             </Select>
           </div>
-
-          <div className="grid gap-2">
+          <div className="grid gap-1">
             <Label htmlFor="task">Task Description</Label>
             <Textarea
               id="task"
               placeholder="e.g. Submit payroll report"
               value={formData.task}
-              onChange={(e) => handleChange("task", e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                handleChange("task", e.target.value)
+              }
               required
             />
           </div>
-
-          <div className="grid gap-2">
+          <div className="grid gap-1">
             <Label htmlFor="due">Due Date</Label>
             <Input
               id="due"
               type="date"
               value={formData.due}
-              onChange={(e) => handleChange("due", e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChange("due", e.target.value)
+              }
             />
           </div>
-
-          <div className="grid gap-2">
+          <div className="grid gap-1">
             <Label htmlFor="priority">Priority</Label>
             <Select
               id="priority"
               value={formData.priority}
-              onChange={(e) => handleChange("priority", e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                handleChange("priority", e.target.value)
+              }
             >
               <SelectItem value="High">High</SelectItem>
               <SelectItem value="Normal">Normal</SelectItem>
               <SelectItem value="Low">Low</SelectItem>
             </Select>
           </div>
-
-          <Button className="mt-4 w-full" onClick={handleSubmit}>
-  Assign Task
-</Button>
+          <Button type="submit" className="w-full mt-2">
+            Assign Task
+          </Button>
         </form>
       </CardContent>
     </Card>
-  );
+);
 }
