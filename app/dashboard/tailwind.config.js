@@ -3,7 +3,7 @@ module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}"
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -21,14 +21,14 @@ module.exports = {
         "accent-foreground": "oklch(var(--accent-foreground) / <alpha-value>)",
         muted: "oklch(var(--muted) / <alpha-value>)",
         "muted-foreground": "oklch(var(--muted-foreground) / <alpha-value>)",
-        destructive: "oklch(var(--destructive) / <alpha-value>)"
+        destructive: "oklch(var(--destructive) / <alpha-value>)",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)"
-      }
-    }
+        sm: "calc(var(--radius) - 4px)",
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };
