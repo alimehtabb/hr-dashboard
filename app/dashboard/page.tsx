@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Button from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,40 +11,50 @@ import DepartmentSuggestions from "@/components/ui/DepartmentSuggestions";
 
 export default function DashboardPage() {
   return (
-    <main className="min-h-screen bg-muted p-8 space-y-10">
-      <header className="space-y-1">
-        <h1 className="text-3xl font-bold tracking-tight text-primary">
+    <main className="bg-background text-foreground min-h-screen px-6 py-10 space-y-10">
+      
+      {/* ✅ Tailwind CSS Test Box */}
+      <div className="bg-red-500 text-white p-4 rounded-xl text-center">
+        ✅ Tailwind CSS is working!
+      </div>
+
+      {/* Header */}
+      <header className="space-y-2 text-center">
+        <h1 className="text-4xl font-bold tracking-tight text-primary">
           AI-Powered HR Dashboard
         </h1>
-        <p className="text-muted-foreground">
-          Monitor team performance, assign tasks, and boost productivity.
+        <p className="text-muted-foreground max-w-xl mx-auto">
+          Monitor performance, assign tasks, and boost productivity with AI-based insights.
         </p>
       </header>
 
-      {/* KPI and Suggestions Section */}
-      <section className="grid gap-6 md:grid-cols-2">
-        <Card className="rounded-2xl shadow">
-          <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">Department Health</h2>
+      {/* Charts & AI Suggestions */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="rounded-2xl shadow-md">
+          <CardContent className="p-6">
+            <h2 className="text-2xl font-semibold mb-4">Department Health</h2>
             <DepartmentChart />
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl shadow">
-          <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">Department Suggestions</h2>
+        <Card className="rounded-2xl shadow-md">
+          <CardContent className="p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-semibold">AI Suggestions</h2>
+              <Button variant="outline">Generate New Suggestions</Button>
+            </div>
             <DepartmentSuggestions />
           </CardContent>
         </Card>
       </section>
 
-      {/* Task Assignment and Notes Section */}
-      <section className="grid gap-6 md:grid-cols-2">
-        <Card className="rounded-2xl shadow">
+      {/* Task Assign + Notes */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="rounded-2xl shadow-md">
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">Assign Tasks</h2>
+            <h2 className="text-2xl font-semibold">Assign Tasks</h2>
             <TaskAssignForm />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
               <Button className="w-full">Assign Tasks</Button>
               <Button variant="outline" className="w-full">
                 View Leaderboard
@@ -52,24 +63,24 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl shadow">
+        <Card className="rounded-2xl shadow-md">
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">Internal Notes</h2>
+            <h2 className="text-2xl font-semibold">Internal Notes</h2>
             <Textarea
               placeholder="Write your notes here..."
               rows={6}
               className="resize-none"
             />
-            <Button className="w-full">Save Notes</Button>
+            <Button className="w-full mt-2">Save Notes</Button>
           </CardContent>
         </Card>
       </section>
 
-      {/* Task Table Section */}
+      {/* Task Table */}
       <section>
-        <Card className="rounded-2xl shadow">
-          <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">Task Table</h2>
+        <Card className="rounded-2xl shadow-md">
+          <CardContent className="p-6">
+            <h2 className="text-2xl font-semibold mb-4">Task Table</h2>
             <TaskTable />
           </CardContent>
         </Card>
