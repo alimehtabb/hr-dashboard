@@ -8,6 +8,7 @@ import DepartmentChart from "@/components/ui/Chart";
 import TaskAssignForm from "@/components/ui/TaskAssignForm";
 import TaskTable from "@/components/ui/TaskTable";
 import DepartmentSuggestions from "@/components/ui/DepartmentSuggestions";
+import DailyTaskCard from "@/components/ui/DailyTaskCard";
 
 export default function DashboardPage() {
   return (
@@ -71,6 +72,21 @@ export default function DashboardPage() {
             <TaskTable />
           </CardContent>
         </Card>
+      </section>
+
+      {/* Daily Task Card Test (Step 3) */}
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <DailyTaskCard
+          employee="Sarah Ahmed"
+          department="Sales"
+          points={950}
+          colorClass="bg-blue-600"
+          tasks={[
+            { title: "Call 5 prospects", completed: true },
+            { title: "Send follow-up emails", completed: true },
+            { title: "Update CRM", completed: false },
+          ]}
+        />
       </section>
     </main>
   );
