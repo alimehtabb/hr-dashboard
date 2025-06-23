@@ -14,13 +14,10 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-
-    // ✅ ADD THESE TWO LINES:
-    "baseUrl": ".", 
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
     },
-
     "types": ["node", "react"],
     "plugins": [{ "name": "next" }]
   },
