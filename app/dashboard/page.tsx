@@ -4,7 +4,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Button from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import DepartmentChart from "@/components/ui/chart";
+import DepartmentChart from "@/components/ui/Chart";
 import TaskAssignForm from "@/components/ui/TaskAssignForm";
 import TaskTable from "@/components/ui/TaskTable";
 import DepartmentSuggestions from "@/components/ui/DepartmentSuggestions";
