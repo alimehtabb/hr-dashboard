@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import Button from "@/components/ui/button";
+import { Checkbox } from "@/components/components/checkbox";
+import { Input } from "@/components/components/input";
+import { Label } from "@/components/components/label";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/components/tabs";
+import Button from "@/components/components/button";
 
 interface Task {
   id: number;
