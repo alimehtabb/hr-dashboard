@@ -4,7 +4,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Button from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import DepartmentChart from "@/components/ui/Chart";
+import DepartmentChart from "@/components/ui/chart";
 import TaskAssignForm from "@/components/ui/TaskAssignForm";
 import TaskTable from "@/components/ui/TaskTable";
 import DepartmentSuggestions from "@/components/ui/DepartmentSuggestions";
@@ -12,10 +12,9 @@ import DepartmentSuggestions from "@/components/ui/DepartmentSuggestions";
 export default function DashboardPage() {
   return (
     <main className="bg-background text-foreground min-h-screen px-6 py-10 space-y-10">
-      
-      {/* ✅ Tailwind CSS Test Box */}
+      {/* Test Box */}
       <div className="bg-red-500 text-white p-4 rounded-xl text-center">
-        ✅ Tailwind CSS is working!
+        ✅ Tailwind v4 is working!
       </div>
 
       {/* Header */}
@@ -28,7 +27,7 @@ export default function DashboardPage() {
         </p>
       </header>
 
-      {/* Charts & AI Suggestions */}
+      {/* Top Section */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="rounded-2xl shadow-md">
           <CardContent className="p-6">
@@ -36,7 +35,6 @@ export default function DashboardPage() {
             <DepartmentChart />
           </CardContent>
         </Card>
-
         <Card className="rounded-2xl shadow-md">
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-4">
@@ -48,29 +46,18 @@ export default function DashboardPage() {
         </Card>
       </section>
 
-      {/* Task Assign + Notes */}
+      {/* Task Assign & Notes */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="rounded-2xl shadow-md">
           <CardContent className="p-6 space-y-4">
             <h2 className="text-2xl font-semibold">Assign Tasks</h2>
             <TaskAssignForm />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-              <Button className="w-full">Assign Tasks</Button>
-              <Button variant="outline" className="w-full">
-                View Leaderboard
-              </Button>
-            </div>
           </CardContent>
         </Card>
-
         <Card className="rounded-2xl shadow-md">
           <CardContent className="p-6 space-y-4">
             <h2 className="text-2xl font-semibold">Internal Notes</h2>
-            <Textarea
-              placeholder="Write your notes here..."
-              rows={6}
-              className="resize-none"
-            />
+            <Textarea placeholder="Write your notes here..." rows={6} className="resize-none" />
             <Button className="w-full mt-2">Save Notes</Button>
           </CardContent>
         </Card>

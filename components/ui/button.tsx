@@ -4,7 +4,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "outline";
 }
 
-export default function Button({ className = "", variant = "default", ...props }: ButtonProps) {
+export default function Button({
+  className = "",
+  variant = "default",
+  ...props
+}: ButtonProps) {
   const base =
     "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring";
   const variants = {

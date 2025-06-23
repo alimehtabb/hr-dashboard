@@ -1,13 +1,24 @@
+"use client";
+
 import * as React from "react";
 
-interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  checked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+}
 
-export function Checkbox(props: CheckboxProps) {
-  return (
+const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ checked, onCheckedChange, ...props }, ref) => (
     <input
       type="checkbox"
-      className="h-4 w-4 text-primary border border-input rounded focus:ring-2 focus:ring-ring"
+      ref={ref}
+      checked={checked}
+      onChange={(e) => onCheckedChange?.(e.target.checked)}
+      className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-2 focus:ring-primary"
       {...props}
     />
-  );
-}
+  )
+);
+
+Checkbox.displayName = "Checkbox";
+export { Checkbox };

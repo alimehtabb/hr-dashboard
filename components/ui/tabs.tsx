@@ -1,73 +1,54 @@
-import * as React from "react";
+"use client";
 
-interface TabsProps {
-  defaultValue: string;
-  className?: string;
-  children: React.ReactNode;
-}
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  HTMLAttributes
+} from "react";
 
-export function Tabs({ defaultValue, className = "", children }: TabsProps) {
-  const [active, setActive] = React.useState(defaultValue);
+interface Context { active: string; setActive: (val:string)=>void }
+const Ctx = createContext<Context|null>(null);
 
+export function Tabs({ defaultValue, children, className="" }: {
+  defaultValue: string; children: ReactNode; className?:string
+}) {
+  const [active, setActive] = useState(defaultValue);
   return (
-    <div className={className}>
-      {React.Children.map(children, (child) => {
-        if (!React.isValidElement(child)) return child;
-        // cast to any so TS lets us inject our own props
-        return React.cloneElement(child as React.ReactElement<any>, {
-          activeValue: active,
-          setValue: setActive,
-        });
-      })}
-    </div>
+    <Ctx.Provider value={{ active,setActive }}>
+      <div className={className}>{children}</div>
+    </Ctx.Provider>
   );
 }
 
-export function TabsList({ children, className = "" }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={`flex space-x-2 border-b ${className}`}>{children}</div>;
+export function TabsList(props: HTMLAttributes<HTMLDivElement>) {
+  return <div className={`flex gap-2 ${props.className||""}`}>{props.children}</div>;
 }
 
-interface TabsTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  value: string;
-  activeValue?: string;
-  setValue?: (v: string) => void;
-}
-
-export function TabsTrigger({
-  value,
-  activeValue,
-  setValue,
-  children,
-  className = "",
-  ...props
-}: TabsTriggerProps) {
-  const isActive = value === activeValue;
+export function TabsTrigger({ value, children, className="", ...rest }: {
+  value: string; children: ReactNode; className?:string
+} & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  const ctx = useContext(Ctx)!;
+  const isActive = ctx.active===value;
   return (
     <button
-      className={`px-4 py-2 text-sm font-medium border-b-2 ${
-        isActive ? "border-primary text-primary" : "border-transparent text-muted-foreground"
-      } ${className}`}
-      onClick={() => setValue?.(value)}
-      {...props}
+      {...rest}
+      onClick={()=>ctx.setActive(value)}
+      className={`${className} px-4 py-2 rounded text-sm font-medium ${
+        isActive
+          ? "bg-primary text-primary-foreground"
+          : "bg-muted text-muted-foreground"
+      }`.trim()}
     >
       {children}
     </button>
   );
 }
 
-interface TabsContentProps {
-  value: string;
-  activeValue?: string;
-  children: React.ReactNode;
-  className?: string;
-}
-
-export function TabsContent({
-  value,
-  activeValue,
-  children,
-  className = "",
-}: TabsContentProps) {
-  if (value !== activeValue) return null;
-  return <div className={className}>{children}</div>;
+export function TabsContent({ value, children, className="" }: {
+  value: string; children: ReactNode; className?:string
+}) {
+  const ctx = useContext(Ctx)!;
+  return ctx.active===value ? <div className={className}>{children}</div> : null;
 }

@@ -1,98 +1,43 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Button from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs";
+import { Input } from "./input";
+import { Label } from "./label";
+import { Checkbox } from "./checkbox";
+import Button from "./button";
 
-interface Task {
-  id: number;
-  employee: string;
-  department: string;
-  task: string;
-  deadline: string;
-  completed: boolean;
-  points: number;
-}
-
-// Dummy data
+interface Task { id:number; employee:string; department:string; task:string; deadline:string; completed:boolean; points:number; }
 const dummyTasks: Task[] = [
-  {
-    id: 1,
-    employee: "Mehtab Ali",
-    department: "HR/Admin",
-    task: "Prepare July HR report",
-    deadline: "2025-07-05",
-    completed: false,
-    points: 15,
-  },
-  {
-    id: 2,
-    employee: "Kamrul Islam",
-    department: "Accounts",
-    task: "Reconcile bank payments",
-    deadline: "2025-07-03",
-    completed: true,
-    points: 20,
-  },
-  {
-    id: 3,
-    employee: "Nayem Hosen",
-    department: "IT",
-    task: "Design Eid flyer",
-    deadline: "2025-06-30",
-    completed: false,
-    points: 10,
-  },
+  { id:1, employee:"Mehtab Ali", department:"HR/Admin", task:"Prepare July HR report", deadline:"2025-07-05", completed:false, points:15 },
+  { id:2, employee:"Kamrul Islam", department:"Accounts", task:"Reconcile bank payments", deadline:"2025-07-03", completed:true, points:20 },
+  { id:3, employee:"Nayem Hosen", department:"IT", task:"Design Eid flyer", deadline:"2025-06-30", completed:false, points:10 },
 ];
 
 export default function TaskDashboard() {
-  const [search, setSearch] = useState<string>("");
-  const [tasks, setTasks] = useState<Task[]>(dummyTasks);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [search,setSearch] = useState("");
+  const [tasks,setTasks] = useState<Task[]>(dummyTasks);
+  const [suggestions,setSuggestions] = useState<string[]>([]);
 
-  // Toggle completion state
-  const toggleCompletion = (id: number) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === id ? { ...t, completed: !t.completed } : t
-      )
-    );
-  };
+  const toggleCompletion=(id:number)=>
+    setTasks(prev=>prev.map(t=>t.id===id?{...t,completed:!t.completed}:t));
 
-  // AI suggestions mock
-  const generateSuggestions = () => {
-    const ideas = [
+  const generateSuggestions=()=>{
+    const ideas=[
       "Implement micro-rewards for daily logins",
-      "Introduce department-based goal charts",
+      "Introduce dept-based goal charts",
       "Use color-coded badges for task completion",
       "Reward idea submissions monthly",
-      "Gamify attendance tracking with streaks",
+      "Gamify attendance tracking with streaks"
     ];
-    setSuggestions(ideas.sort(() => 0.5 - Math.random()).slice(0, 3));
+    setSuggestions(ideas.sort(()=>0.5-Math.random()).slice(0,3));
   };
 
-  // Filtered tasks memo
-  const filteredTasks = useMemo(
-    () =>
-      tasks.filter((t) =>
-        t.employee.toLowerCase().includes(search.toLowerCase())
-      ),
-    [search, tasks]
+  const filtered = useMemo(
+    ()=>tasks.filter(t=>t.employee.toLowerCase().includes(search.toLowerCase())),
+    [search,tasks]
   );
-
-  // Leaderboard memo
-  const leaderboard = useMemo(
-    () => [...tasks].sort((a, b) => b.points - a.points),
-    [tasks]
-  );
+  const leaderboard = useMemo(()=>[...tasks].sort((a,b)=>b.points-a.points),[tasks]);
 
   return (
     <Tabs defaultValue="tasks" className="mt-6">
@@ -102,113 +47,68 @@ export default function TaskDashboard() {
         <TabsTrigger value="ai">AI Suggestions</TabsTrigger>
       </TabsList>
 
-      {/* Tasks Table */}
       <TabsContent value="tasks">
         <div className="space-y-4">
           <div>
             <Label htmlFor="filter">Filter by Employee</Label>
-            <Input
-              id="filter"
-              placeholder="e.g. Mehtab"
+            <Input id="filter" placeholder="e.g. Mehtab"
               value={search}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setSearch(e.target.value)
-              }
-            />
+              onChange={e=>setSearch(e.target.value)} />
           </div>
-
           <div className="overflow-x-auto">
             <table className="min-w-full border text-sm bg-white shadow rounded">
               <thead className="bg-accent text-accent-foreground">
                 <tr>
-                  <th className="px-4 py-2 border-border border-b text-left">
-                    Employee
-                  </th>
-                  <th className="px-4 py-2 border-border border-b text-left">
-                    Department
-                  </th>
-                  <th className="px-4 py-2 border-border border-b text-left">
-                    Task
-                  </th>
-                  <th className="px-4 py-2 border-border border-b text-left">
-                    Deadline
-                  </th>
-                  <th className="px-4 py-2 border-border border-b text-center">
-                    Completed
-                  </th>
-                  <th className="px-4 py-2 border-border border-b text-center">
-                    Points
-                  </th>
+                  <th className="px-4 py-2 border-border border-b text-left">Employee</th>
+                  <th className="px-4 py-2 border-border border-b text-left">Dept</th>
+                  <th className="px-4 py-2 border-border border-b text-left">Task</th>
+                  <th className="px-4 py-2 border-border border-b text-left">Deadline</th>
+                  <th className="px-4 py-2 border-border border-b text-center">Done</th>
+                  <th className="px-4 py-2 border-border border-b text-center">Pts</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredTasks.length === 0 ? (
+                {filtered.length===0 ? (
                   <tr>
-                    <td
-                      colSpan={6}
-                      className="p-4 text-center text-muted-foreground"
-                    >
-                      No matching tasks found.
+                    <td colSpan={6} className="p-4 text-center text-muted-foreground">
+                      No matching tasks.
                     </td>
                   </tr>
-                ) : (
-                  filteredTasks.map((task) => (
-                    <tr key={task.id}>
-                      <td className="px-4 py-2 border-border border-b">
-                        {task.employee}
-                      </td>
-                      <td className="px-4 py-2 border-border border-b">
-                        {task.department}
-                      </td>
-                      <td className="px-4 py-2 border-border border-b">
-                        {task.task}
-                      </td>
-                      <td className="px-4 py-2 border-border border-b">
-                        {task.deadline}
-                      </td>
-                      <td className="px-4 py-2 border-border border-b text-center">
-                        <Checkbox
-                          checked={task.completed}
-                          onChange={() => toggleCompletion(task.id)}
-                        />
-                      </td>
-                      <td className="px-4 py-2 border-border border-b text-center">
-                        {task.points}
-                      </td>
-                    </tr>
-                  ))
-                )}
+                ) : filtered.map(t=>(
+                  <tr key={t.id}>
+                    <td className="px-4 py-2 border-border border-b">{t.employee}</td>
+                    <td className="px-4 py-2 border-border border-b">{t.department}</td>
+                    <td className="px-4 py-2 border-border border-b">{t.task}</td>
+                    <td className="px-4 py-2 border-border border-b">{t.deadline}</td>
+                    <td className="px-4 py-2 border-border border-b text-cent er">
+                      <Checkbox checked={t.completed} onCheckedChange={()=>toggleCompletion(t.id)} />
+                    </td>
+                    <td className="px-4 py-2 border-border border-b text-center">{t.points}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
       </TabsContent>
 
-      {/* Leaderboard */}
       <TabsContent value="leaderboard">
         <div className="space-y-2">
           <h3 className="font-semibold text-lg">Top Performers</h3>
           <ul className="list-decimal ml-6 text-foreground">
-            {leaderboard.map((t, i) => (
-              <li key={i}>
-                {t.employee} — {t.points} pts
-              </li>
-            ))}
+            {leaderboard.map((t,i)=><li key={i}>{t.employee} — {t.points} pts</li>)}
           </ul>
         </div>
       </TabsContent>
 
-      {/* AI Suggestions */}
       <TabsContent value="ai">
         <div className="space-y-4">
-          <h3 className="font-semibold text-lg">Department AI Suggestions</h3>
+          <h3 className="font-semibold text-lg">AI Suggestions</h3>
           <Button variant="outline" onClick={generateSuggestions}>
             Generate New Suggestions
           </Button>
           <ul className="list-disc ml-6 text-foreground">
-            {suggestions.map((s, i) => (
-              <li key={i}>{s}</li>
-            ))}
+            {suggestions.map((s,i)=><li key={i}>{s}</li>)}
           </ul>
         </div>
       </TabsContent>
