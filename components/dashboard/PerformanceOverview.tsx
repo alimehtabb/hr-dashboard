@@ -1,64 +1,44 @@
 "use client";
 
 import React from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
-import { ProgressBar } from "@/components/ui/ProgressBar";
-import { Sparkle } from "lucide-react";
 
-const metrics = [
-  {
-    title: "Attendance",
-    value: "95%",
-    progress: 95,
-    color: "bg-green-600",
-  },
-  {
-    title: "Task Completion",
-    value: "78%",
-    progress: 78,
-    color: "bg-blue-600",
-  },
-  {
-    title: "Engagement",
-    value: "62%",
-    progress: 62,
-    color: "bg-yellow-500",
-  },
-  {
-    title: "Idea Submission",
-    value: "41%",
-    progress: 41,
-    color: "bg-pink-600",
-  },
+const data = [
+  { month: "Jan", performance: 30 },
+  { month: "Feb", performance: 45 },
+  { month: "Mar", performance: 25 },
+  { month: "Apr", performance: 50 },
+  { month: "May", performance: 42 },
+  { month: "Jun", performance: 60 },
 ];
 
 export default function PerformanceOverview() {
   return (
-    <section className="space-y-6">
-      <h2 className="text-2xl font-bold flex items-center gap-2 text-primary">
-        <Sparkle className="h-5 w-5 text-primary" />
-        Performance Overview
-      </h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {metrics.map((item) => (
-          <Card key={item.title} className="rounded-2xl shadow-sm">
-            <CardContent className="p-6 space-y-3">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <span className="text-sm font-medium text-muted-foreground">
-                  {item.value}
-                </span>
-              </div>
-              <ProgressBar
-                value={item.progress}
-                barClassName={item.color}
-                className="bg-muted"
-              />
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </section>
+    <Card className="rounded-2xl shadow">
+      <CardContent className="p-6 space-y-4">
+        <h2 className="text-2xl font-semibold text-primary">📈 Performance Trends</h2>
+        <ResponsiveContainer width="100%" height={240}>
+          <LineChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="month" stroke="#6b7280" fontSize={12} />
+            <YAxis stroke="#6b7280" fontSize={12} />
+            <Tooltip
+              contentStyle={{ backgroundColor: "white", borderRadius: "0.5rem", border: "1px solid #ccc" }}
+              labelStyle={{ color: "#6b7280" }}
+            />
+            <Line type="monotone" dataKey="performance" stroke="#4f46e5" strokeWidth={3} dot={{ r: 4 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
   );
 }

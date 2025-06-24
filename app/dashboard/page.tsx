@@ -5,7 +5,6 @@ import TopPerformers from "@/components/dashboard/TopPerformers";
 import DepartmentGrid from "@/components/dashboard/DepartmentGrid";
 import PerformanceOverview from "@/components/dashboard/PerformanceOverview";
 import Leaderboard from "@/components/dashboard/Leaderboard";
-import ChartTabs from "@/components/ui/ChartTabs";
 import DepartmentSuggestions from "@/components/ui/DepartmentSuggestions";
 import TaskAssignForm from "@/components/ui/TaskAssignForm";
 import TaskTable from "@/components/ui/TaskTable";
@@ -68,7 +67,7 @@ export default function DashboardPage() {
       {/* Top Performers */}
       <TopPerformers />
 
-      {/* Department Grid */}
+      {/* Department Progress Grid */}
       <DepartmentGrid />
 
       {/* Charts & Suggestions */}
@@ -82,7 +81,7 @@ export default function DashboardPage() {
         </Card>
       </section>
 
-      {/* Assign Task & Notes */}
+      {/* Assign Task & Internal Notes */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="rounded-2xl shadow border border-muted">
           <CardContent className="p-6 space-y-4">
@@ -108,13 +107,13 @@ export default function DashboardPage() {
         </Card>
       </section>
 
-      {/* Daily Tasks */}
+      {/* Daily Task Cards */}
       <DailyTaskGrid />
 
       {/* Leaderboard */}
       <Leaderboard />
 
-      {/* Divider */}
+      {/* Footer Divider */}
       <hr className="border-t border-muted my-6" />
     </main>
   );
