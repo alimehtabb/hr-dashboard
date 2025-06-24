@@ -1,28 +1,18 @@
-"use client";
-
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
-  value?: number;
+interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
+  value: number;
+  barClassName?: string; // ← add this
 }
 
-const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
-  ({ className, value, ...props }, ref) => {
-    return (
+export function ProgressBar({ value, className, barClassName, ...props }: ProgressBarProps) {
+  return (
+    <div className={cn("w-full bg-gray-200 rounded-full h-2", className)} {...props}>
       <div
-        ref={ref}
-        className={cn("relative h-3 w-full overflow-hidden rounded-full bg-muted", className)}
-        {...props}
-      >
-        <div
-          className="h-full bg-primary transition-all duration-300 ease-in-out"
-          style={{ width: `${value ?? 0}%` }}
-        />
-      </div>
-    );
-  }
-);
-Progress.displayName = "Progress";
-
-export { Progress };
+        className={cn("h-full rounded-full bg-primary transition-all", barClassName)}
+        style={{ width: `${value}%` }}
+      />
+    </div>
+  );
+}

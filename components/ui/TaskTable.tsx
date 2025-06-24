@@ -17,19 +17,13 @@ interface Task {
   points: number;
 }
 
-const dummyTasks: Task[] = [
-  { id: 1, employee: "Mehtab Ali", department: "HR/Admin", task: "Prepare July HR report", deadline: "2025-07-05", completed: false, points: 15 },
-  { id: 2, employee: "Kamrul Islam", department: "Accounts", task: "Reconcile bank payments", deadline: "2025-07-03", completed: true, points: 20 },
-  { id: 3, employee: "Nayem Hosen", department: "IT", task: "Design Eid flyer", deadline: "2025-06-30", completed: false, points: 10 },
-];
-
-export default function TaskTable() {
+export default function TaskTable({ tasks }: { tasks: Task[] }) {
   const [search, setSearch] = useState("");
-  const [tasks, setTasks] = useState<Task[]>(dummyTasks);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [localTasks, setLocalTasks] = useState<Task[]>(tasks);
 
   const toggleCompletion = (id: number) =>
-    setTasks((prev) =>
+    setLocalTasks((prev) =>
       prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
     );
 
@@ -45,10 +39,14 @@ export default function TaskTable() {
   };
 
   const filtered = useMemo(
-    () => tasks.filter((t) => t.employee.toLowerCase().includes(search.toLowerCase())),
-    [search, tasks]
+    () => localTasks.filter((t) => t.employee.toLowerCase().includes(search.toLowerCase())),
+    [search, localTasks]
   );
-  const leaderboard = useMemo(() => [...tasks].sort((a, b) => b.points - a.points), [tasks]);
+
+  const leaderboard = useMemo(
+    () => [...localTasks].sort((a, b) => b.points - a.points),
+    [localTasks]
+  );
 
   return (
     <Tabs defaultValue="tasks" className="mt-6">
@@ -66,19 +64,19 @@ export default function TaskTable() {
               id="filter"
               placeholder="e.g. Mehtab"
               value={search}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full border text-sm bg-white shadow rounded">
               <thead className="bg-accent text-accent-foreground">
                 <tr>
-                  <th className="px-4 py-2 border-border border-b text-left">Employee</th>
-                  <th className="px-4 py-2 border-border border-b text-left">Department</th>
-                  <th className="px-4 py-2 border-border border-b text-left">Task</th>
-                  <th className="px-4 py-2 border-border border-b text-left">Deadline</th>
-                  <th className="px-4 py-2 border-border border-b text-center">Completed</th>
-                  <th className="px-4 py-2 border-border border-b text-center">Points</th>
+                  <th className="px-4 py-2 border-b text-left">Employee</th>
+                  <th className="px-4 py-2 border-b text-left">Department</th>
+                  <th className="px-4 py-2 border-b text-left">Task</th>
+                  <th className="px-4 py-2 border-b text-left">Deadline</th>
+                  <th className="px-4 py-2 border-b text-center">Completed</th>
+                  <th className="px-4 py-2 border-b text-center">Points</th>
                 </tr>
               </thead>
               <tbody>
@@ -91,17 +89,17 @@ export default function TaskTable() {
                 ) : (
                   filtered.map((task) => (
                     <tr key={task.id}>
-                      <td className="px-4 py-2 border-border border-b">{task.employee}</td>
-                      <td className="px-4 py-2 border-border border-b">{task.department}</td>
-                      <td className="px-4 py-2 border-border border-b">{task.task}</td>
-                      <td className="px-4 py-2 border-border border-b">{task.deadline}</td>
-                      <td className="px-4 py-2 border-border border-b text-center">
+                      <td className="px-4 py-2 border-b">{task.employee}</td>
+                      <td className="px-4 py-2 border-b">{task.department}</td>
+                      <td className="px-4 py-2 border-b">{task.task}</td>
+                      <td className="px-4 py-2 border-b">{task.deadline}</td>
+                      <td className="px-4 py-2 border-b text-center">
                         <Checkbox
                           checked={task.completed}
-                          onChange={() => toggleCompletion(task.id)}
+                          onCheckedChange={() => toggleCompletion(task.id)}
                         />
                       </td>
-                      <td className="px-4 py-2 border-border border-b text-center">{task.points}</td>
+                      <td className="px-4 py-2 border-b text-center">{task.points}</td>
                     </tr>
                   ))
                 )}
