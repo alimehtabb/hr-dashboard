@@ -1,5 +1,4 @@
 @import "tailwindcss/preflight";
-@import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
 :root {
@@ -18,11 +17,4 @@
   --ring: oklch(0.6 0.04 256.7);
   --destructive: oklch(0.6 0.2 27.3);
   --radius: 0.5rem;
-}
-
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
 }
