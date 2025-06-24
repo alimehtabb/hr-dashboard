@@ -59,21 +59,10 @@ h4 {
 
 /* Responsive Heading Scaling */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  h3 {
-    font-size: 1.25rem;
-  }
-
-  h4 {
-    font-size: 1.1rem;
-  }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1.1rem; }
 }
 
 /* Table Styling */
@@ -109,7 +98,6 @@ input, textarea, select {
   max-width: 100%;
 }
 
-/* Checkbox + small input fixes */
 input[type="checkbox"] {
   width: 1rem;
   height: 1rem;
@@ -123,6 +111,12 @@ input[type="checkbox"] {
 /* Responsive padding utilities */
 .padded-container {
   padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .padded-container {
+    padding: 2rem;
+  }
 }
 
 /* Smooth Scrollbars */
@@ -165,8 +159,21 @@ input[type="checkbox"] {
 }
 
 .fade-in {
+  opacity: 0;
   animation: fadeIn 0.5s ease-out forwards;
+  will-change: transform, opacity;
 }
+
+/* Fade-in delay utility classes */
+.fade-in-delay-100 { animation-delay: 0.1s; }
+.fade-in-delay-200 { animation-delay: 0.2s; }
+.fade-in-delay-300 { animation-delay: 0.3s; }
+.fade-in-delay-400 { animation-delay: 0.4s; }
+.fade-in-delay-500 { animation-delay: 0.5s; }
+.fade-in-delay-600 { animation-delay: 0.6s; }
+.fade-in-delay-700 { animation-delay: 0.7s; }
+.fade-in-delay-800 { animation-delay: 0.8s; }
+.fade-in-delay-900 { animation-delay: 0.9s; }
 
 /* Apply fade-in to common blocks */
 section,
@@ -185,10 +192,4 @@ main > section {
   margin-left: auto;
   margin-right: auto;
   padding: 1rem;
-}
-
-@media (min-width: 768px) {
-  .padded-container {
-    padding: 2rem;
-  }
 }

@@ -49,34 +49,24 @@ export default function TopPerformers() {
 
   return (
     <section className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-        <h2 className="text-2xl font-bold text-primary">🏅 Top Performers of the Month</h2>
-        <TabsList className="mt-4 md:mt-0 w-full md:w-auto">
+      <h2 className="text-2xl font-bold text-primary">🏅 Top Performers of the Month</h2>
+
+      <Tabs value={tab} onValueChange={(val) => setTab(val as TabKey)} className="w-full">
+        <TabsList className="mt-2 mb-4 flex flex-wrap gap-2 rounded-xl bg-muted p-2">
           {(Object.keys(topPerformersData) as TabKey[]).map((key) => (
-            <TabsTrigger
-              key={key}
-              value={key}
-              className={
-                tab === key
-                  ? "bg-primary text-primary-foreground"
-                  : "hover:bg-accent hover:text-accent-foreground"
-              }
-              onClick={() => setTab(key)}
-            >
+            <TabsTrigger key={key} value={key}>
               {key}
             </TabsTrigger>
           ))}
         </TabsList>
-      </div>
 
-      <Tabs value={tab} className="w-full">
         {(Object.keys(topPerformersData) as TabKey[]).map((key) => (
-          <TabsContent key={key} value={key} className="mt-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {topPerformersData[key].length === 0 ? (
-                <p className="text-muted-foreground col-span-full">No data available for this tab.</p>
-              ) : (
-                topPerformersData[key].map((item, idx) => (
+          <TabsContent key={key} value={key}>
+            {topPerformersData[key].length === 0 ? (
+              <p className="text-muted-foreground text-center py-4">No data available for this tab.</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {topPerformersData[key].map((item, idx) => (
                   <DailyTaskCard
                     key={idx}
                     employee={item.employee}
@@ -85,9 +75,9 @@ export default function TopPerformers() {
                     colorClass={item.colorClass}
                     tasks={item.tasks}
                   />
-                ))
-              )}
-            </div>
+                ))}
+              </div>
+            )}
           </TabsContent>
         ))}
       </Tabs>
