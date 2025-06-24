@@ -1,104 +1,95 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, CardContent } from "./card";
-import { Input } from "./input";
-import { Label } from "./label";
-import { Select, SelectItem } from "./select";
-import Button from "./button";
-import { Textarea } from "./textarea";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import  Button  from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
-const departments = ["Sales", "Accounts", "IT", "HR", "Admin", "Legal", "Operations"];
+interface Task {
+  employee: string;
+  department: string;
+  task: string;
+  deadline: string;
+}
 
-export default function TaskAssignForm({ onSubmit }: { onSubmit: (task: any) => void }) {
-  const [data, setData] = useState({
+export default function TaskAssignForm({ onSubmit }: { onSubmit: (task: Task) => void }) {
+  const [form, setForm] = useState<Task>({
     employee: "",
     department: "",
     task: "",
-    due: "",
-    priority: "Normal",
+    deadline: "",
   });
 
-  function onChange<K extends keyof typeof data>(key: K, value: string) {
-    setData((prev) => ({ ...prev, [key]: value }));
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!data.employee || !data.department || !data.task) {
-      alert("Fill required fields");
-      return;
+    if (form.employee && form.task && form.department && form.deadline) {
+      onSubmit(form);
+      setForm({ employee: "", department: "", task: "", deadline: "" });
     }
-    onSubmit(data);
-    setData({ employee: "", department: "", task: "", due: "", priority: "Normal" });
   }
 
   return (
-    <Card className="w-full">
-      <CardContent className="p-6 space-y-4">
-        <h2 className="text-xl font-semibold">📝 Assign Task</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid gap-1">
-            <Label htmlFor="employee">Employee Name</Label>
-            <Input
-              id="employee"
-              value={data.employee}
-              onChange={(e) => onChange("employee", e.target.value)}
-              required
-              placeholder="e.g. Mehtab Ali"
-            />
-          </div>
-          <div className="grid gap-1">
-            <Label htmlFor="department">Department</Label>
-            <Select
-              id="department"
-              value={data.department}
-              onChange={(e) => onChange("department", e.target.value)}
-            >
-              <SelectItem value="">Select Department</SelectItem>
-              {departments.map((dept) => (
-                <SelectItem key={dept} value={dept}>
-                  {dept}
-                </SelectItem>
-              ))}
-            </Select>
-          </div>
-          <div className="grid gap-1">
-            <Label htmlFor="task">Task Description</Label>
-            <Textarea
-              id="task"
-              value={data.task}
-              onChange={(e) => onChange("task", e.target.value)}
-              required
-              placeholder="e.g. Submit payroll report"
-            />
-          </div>
-          <div className="grid gap-1">
-            <Label htmlFor="due">Due Date</Label>
-            <Input
-              id="due"
-              type="date"
-              value={data.due}
-              onChange={(e) => onChange("due", e.target.value)}
-            />
-          </div>
-          <div className="grid gap-1">
-            <Label htmlFor="priority">Priority</Label>
-            <Select
-              id="priority"
-              value={data.priority}
-              onChange={(e) => onChange("priority", e.target.value)}
-            >
-              <SelectItem value="High">High</SelectItem>
-              <SelectItem value="Normal">Normal</SelectItem>
-              <SelectItem value="Low">Low</SelectItem>
-            </Select>
-          </div>
-          <Button type="submit" className="w-full mt-2">
-            Assign Task
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="employee">Employee</Label>
+          <Input
+            name="employee"
+            id="employee"
+            value={form.employee}
+            onChange={handleChange}
+            placeholder="Enter employee name"
+            className="rounded-xl"
+          />
+        </div>
+        <div>
+          <Label htmlFor="department">Department</Label>
+          <Input
+            name="department"
+            id="department"
+            value={form.department}
+            onChange={handleChange}
+            placeholder="e.g. HR, IT"
+            className="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label htmlFor="task">Task</Label>
+        <Textarea
+          name="task"
+          id="task"
+          rows={3}
+          value={form.task}
+          onChange={handleChange}
+          placeholder="Describe the task"
+          className="rounded-xl resize-none"
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="deadline">Deadline</Label>
+        <Input
+          name="deadline"
+          id="deadline"
+          type="date"
+          value={form.deadline}
+          onChange={handleChange}
+          className="rounded-xl"
+        />
+      </div>
+
+      <Button type="submit" className="w-full rounded-xl">
+        Assign Task
+      </Button>
+    </form>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/Avatar";
 
@@ -26,6 +25,7 @@ const leaderboard = [
 ];
 
 const medals = ["🥇", "🥈", "🥉"];
+const bgClasses = ["bg-yellow-100", "bg-gray-100", "bg-orange-100"];
 
 export default function Leaderboard() {
   return (
@@ -36,28 +36,29 @@ export default function Leaderboard() {
         {leaderboard.map((user, index) => (
           <Card
             key={user.name}
-            className="flex items-center gap-4 p-4 border shadow-sm rounded-2xl"
+            className={`rounded-2xl shadow transition hover:shadow-lg ${bgClasses[index] || "bg-muted"}`}
           >
-            <div className="text-3xl">{medals[index]}</div>
+            <CardContent className="flex items-center gap-4 p-4">
+              <div className="relative">
+                <Avatar className="w-14 h-14 border border-muted-foreground">
+                  <AvatarImage src={user.avatarUrl} alt={user.name} />
+                  <AvatarFallback>
+                    {user.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="absolute -top-2 -right-2 text-2xl">{medals[index]}</span>
+              </div>
 
-            <Avatar className="w-12 h-12">
-              <AvatarImage src={user.avatarUrl} alt={user.name} />
-              <AvatarFallback>{user.name[0]}</AvatarFallback>
-            </Avatar>
-
-            <div className="flex-1 space-y-1">
-              <p className="font-semibold text-base text-primary">
-                {user.name}
-              </p>
-              <p className="text-muted text-sm">{user.department}</p>
-            </div>
-
-            <div className="text-right">
-              <p className="text-xl font-bold text-primary">
-                {user.points}
-              </p>
-              <p className="text-xs text-muted">Points</p>
-            </div>
+              <div className="space-y-1">
+                <h3 className="font-semibold text-lg leading-tight">{user.name}</h3>
+                <p className="text-sm text-muted-foreground">{user.department}</p>
+                <p className="text-sm font-medium text-primary">{user.points} pts</p>
+              </div>
+            </CardContent>
           </Card>
         ))}
       </div>
