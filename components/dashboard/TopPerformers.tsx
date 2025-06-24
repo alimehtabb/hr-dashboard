@@ -1,18 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import DailyTaskCard from "@/components/ui/DailyTaskCard";
 
-type TabKey = "Daily Tasks" | "Idea Submissions" | "Weekly Goals";
-
-const tabData: Record<TabKey, {
-  employee: string;
-  department: string;
-  points: number;
-  colorClass: string;
-  tasks: { title: string; completed: boolean }[];
-}[]> = {
+const topPerformersData = {
   "Daily Tasks": [
     {
       employee: "Sarah Ahmed",
@@ -39,7 +31,7 @@ const tabData: Record<TabKey, {
       employee: "Anika Rahman",
       department: "HR",
       points: 820,
-      colorClass: "bg-orange-600",
+      colorClass: "bg-green-600",
       tasks: [
         { title: "Conduct onboarding", completed: true },
         { title: "Update attendance sheet", completed: false },
@@ -50,31 +42,52 @@ const tabData: Record<TabKey, {
   "Weekly Goals": [],
 };
 
+type TabKey = keyof typeof topPerformersData;
+
 export default function TopPerformers() {
-  const [activeTab, setActiveTab] = useState<TabKey>("Daily Tasks");
+  const [tab, setTab] = useState<TabKey>("Daily Tasks");
 
   return (
     <section className="space-y-6">
-      <h2 className="text-2xl font-bold text-primary">🏅 Top Performers of the Month</h2>
-
-      <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val as TabKey)} className="w-full space-y-4">
-        <TabsList className="bg-muted rounded-xl p-1 w-fit">
-          {(Object.keys(tabData) as TabKey[]).map((key) => (
-            <TabsTrigger key={key} value={key} className="px-4 py-2 text-sm font-medium rounded-lg">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+        <h2 className="text-2xl font-bold text-primary">🏅 Top Performers of the Month</h2>
+        <TabsList className="mt-4 md:mt-0 w-full md:w-auto">
+          {(Object.keys(topPerformersData) as TabKey[]).map((key) => (
+            <TabsTrigger
+              key={key}
+              value={key}
+              className={
+                tab === key
+                  ? "bg-primary text-primary-foreground"
+                  : "hover:bg-accent hover:text-accent-foreground"
+              }
+              onClick={() => setTab(key)}
+            >
               {key}
             </TabsTrigger>
           ))}
         </TabsList>
+      </div>
 
-        {(Object.keys(tabData) as TabKey[]).map((key) => (
-          <TabsContent key={key} value={key} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tabData[key].length === 0 ? (
-              <div className="col-span-full text-center text-muted-foreground py-6">
-                No data available for <strong>{key}</strong>
-              </div>
-            ) : (
-              tabData[key].map((data, index) => <DailyTaskCard key={index} {...data} />)
-            )}
+      <Tabs value={tab} className="w-full">
+        {(Object.keys(topPerformersData) as TabKey[]).map((key) => (
+          <TabsContent key={key} value={key} className="mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {topPerformersData[key].length === 0 ? (
+                <p className="text-muted-foreground col-span-full">No data available for this tab.</p>
+              ) : (
+                topPerformersData[key].map((item, idx) => (
+                  <DailyTaskCard
+                    key={idx}
+                    employee={item.employee}
+                    department={item.department}
+                    points={item.points}
+                    colorClass={item.colorClass}
+                    tasks={item.tasks}
+                  />
+                ))
+              )}
+            </div>
           </TabsContent>
         ))}
       </Tabs>
