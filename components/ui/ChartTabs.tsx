@@ -23,22 +23,27 @@ const datasets = {
     label: "Tasks Completed",
     data: [30, 45, 28, 60, 50, 70],
     borderColor: "oklch(60% 0.15 240)",
+    backgroundColor: "transparent",
   },
   ideas: {
     label: "Ideas Submitted",
     data: [5, 12, 8, 14, 10, 18],
     borderColor: "oklch(60% 0.19 180)",
+    backgroundColor: "transparent",
   },
   goals: {
     label: "Weekly Goals Hit",
     data: [15, 20, 18, 25, 22, 30],
     borderColor: "oklch(60% 0.15 100)",
+    backgroundColor: "transparent",
   },
 };
 
 const options = {
   responsive: true,
-  plugins: { legend: { display: false } },
+  plugins: {
+    legend: { display: false },
+  },
   scales: {
     y: {
       beginAtZero: true,
@@ -49,9 +54,9 @@ const options = {
 
 export default function ChartTabs() {
   return (
-    <Card className="rounded-2xl shadow-sm border">
+    <Card className="rounded-2xl shadow border border-muted">
       <CardContent className="p-6 space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">📊 Performance Trends</h2>
+        <h2 className="text-2xl font-semibold text-primary">📊 Category Trends</h2>
 
         <Tabs defaultValue="tasks">
           <TabsList className="mb-4">
@@ -63,11 +68,9 @@ export default function ChartTabs() {
           <TabsContent value="tasks">
             <Line data={{ labels, datasets: [datasets.tasks] }} options={options} />
           </TabsContent>
-
           <TabsContent value="ideas">
             <Line data={{ labels, datasets: [datasets.ideas] }} options={options} />
           </TabsContent>
-
           <TabsContent value="goals">
             <Line data={{ labels, datasets: [datasets.goals] }} options={options} />
           </TabsContent>

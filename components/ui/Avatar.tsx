@@ -1,9 +1,10 @@
-"use client";
-
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export function Avatar({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+export function Avatar({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -21,7 +22,7 @@ export function AvatarImage({
 }: React.ImgHTMLAttributes<HTMLImageElement>) {
   return (
     <img
-      className={cn("aspect-square h-full w-full object-cover", className)}
+      className={cn("aspect-square h-full w-full", className)}
       {...props}
     />
   );
@@ -35,7 +36,7 @@ export function AvatarFallback({
   return (
     <span
       className={cn(
-        "flex h-full w-full items-center justify-center rounded-full bg-muted text-sm font-medium text-muted-foreground",
+        "flex h-full w-full items-center justify-center rounded-full bg-muted",
         className
       )}
       {...props}

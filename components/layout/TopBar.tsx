@@ -1,30 +1,27 @@
 "use client";
 
 import React from "react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/Avatar";
+import  Button  from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import  Button  from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/Avatar";
 
 export default function TopBar() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="flex items-center justify-between px-4 py-3 border-b border-muted shadow-sm bg-background/70 backdrop-blur-lg sticky top-0 z-30">
-      <h1 className="text-xl font-semibold text-primary hidden md:block">HR Dashboard</h1>
-
+    <header className="sticky top-0 z-50 flex items-center justify-between bg-background border-b border-muted px-6 py-4 shadow-sm">
+      <div className="text-sm text-muted-foreground">Management Assistant</div>
       <div className="flex items-center gap-4">
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          aria-label="Toggle Theme"
         >
-          {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-          <span className="sr-only">Toggle Theme</span>
+          {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
         </Button>
-        
-
-        <Avatar>
+        <Avatar className="w-8 h-8">
           <AvatarImage src="/avatars/mehtab.png" alt="Mehtab Ali" />
           <AvatarFallback>MA</AvatarFallback>
         </Avatar>

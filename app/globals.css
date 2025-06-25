@@ -1,10 +1,7 @@
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
-@import "./styles.css";
 
-/* ------------------------------
-   THEME COLORS (OKLCH)
------------------------------- */
+/* Theme Colors via OKLCH */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.2 0.05 264.7);
@@ -23,9 +20,7 @@
   --radius: 0.5rem;
 }
 
-/* ------------------------------
-   BASE BODY + TEXT
------------------------------- */
+/* Base Styling */
 body {
   font-family: var(--font-geist-sans, sans-serif);
   background-color: var(--background);
@@ -33,13 +28,11 @@ body {
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
-/* ------------------------------
-   HEADINGS
------------------------------- */
+/* Heading Styling */
 h1, h2, h3, h4 {
   font-weight: 700;
   color: var(--primary);
@@ -48,11 +41,23 @@ h1, h2, h3, h4 {
   word-break: break-word;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.25rem; }
+h1 {
+  font-size: 2.5rem;
+}
 
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+/* Responsive Heading Scaling */
 @media (max-width: 768px) {
   h1 { font-size: 2rem; }
   h2 { font-size: 1.5rem; }
@@ -60,9 +65,7 @@ h4 { font-size: 1.25rem; }
   h4 { font-size: 1.1rem; }
 }
 
-/* ------------------------------
-   TABLE STYLING
------------------------------- */
+/* Table Styling */
 table {
   font-size: 14px;
   border-collapse: collapse;
@@ -83,9 +86,12 @@ thead {
   color: var(--accent-foreground);
 }
 
-/* ------------------------------
-   FORMS
------------------------------- */
+/* Smooth transitions */
+* {
+  transition: all 0.15s ease-in-out;
+}
+
+/* Forms */
 input, textarea, select {
   border-radius: var(--radius);
   width: 100%;
@@ -97,57 +103,59 @@ input[type="checkbox"] {
   height: 1rem;
 }
 
-/* ------------------------------
-   SMOOTH TRANSITIONS
------------------------------- */
-* {
-  transition: all 0.15s ease-in-out;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) var(--muted);
+/* Card overflow fix on mobile */
+.card {
+  overflow-x: auto;
 }
 
-/* ------------------------------
-   SCROLLBARS
------------------------------- */
+/* Responsive padding utilities */
+.padded-container {
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .padded-container {
+    padding: 2rem;
+  }
+}
+
+/* Smooth Scrollbars */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--muted);
   border-radius: var(--radius);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
   border-radius: var(--radius);
   border: 2px solid var(--muted);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: oklch(0.4 0.2 260);
 }
 
-/* ------------------------------
-   UTILITIES
------------------------------- */
-.card { overflow-x: auto; }
-
-.padded-container { padding: 1rem; }
-@media (min-width: 768px) {
-  .padded-container { padding: 2rem; }
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--muted);
 }
 
-.container-center {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-/* ------------------------------
-   ANIMATIONS: FADE-IN
------------------------------- */
+/* Global Fade-In Animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .fade-in {
@@ -156,6 +164,7 @@ input[type="checkbox"] {
   will-change: transform, opacity;
 }
 
+/* Fade-in delay utility classes */
 .fade-in-delay-100 { animation-delay: 0.1s; }
 .fade-in-delay-200 { animation-delay: 0.2s; }
 .fade-in-delay-300 { animation-delay: 0.3s; }
@@ -166,7 +175,7 @@ input[type="checkbox"] {
 .fade-in-delay-800 { animation-delay: 0.8s; }
 .fade-in-delay-900 { animation-delay: 0.9s; }
 
-/* Auto-animate common dashboard blocks */
+/* Apply fade-in to common blocks */
 section,
 .card,
 .card-content,
@@ -175,4 +184,12 @@ main > section {
   opacity: 0;
   animation: fadeIn 0.5s ease-out forwards;
   animation-delay: 0.1s;
+}
+
+/* Optional container max-width */
+.container-center {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
 }

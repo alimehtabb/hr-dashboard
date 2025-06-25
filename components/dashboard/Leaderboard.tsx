@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/Avatar";
 
@@ -10,25 +9,23 @@ const leaderboard = [
     department: "Sales",
     points: 950,
     avatarUrl: "/avatars/sarah.png",
-    rank: 1,
   },
   {
     name: "Zaid Khan",
     department: "Marketing",
     points: 870,
     avatarUrl: "/avatars/zaid.png",
-    rank: 2,
   },
   {
     name: "Anika Rahman",
     department: "HR",
     points: 820,
     avatarUrl: "/avatars/anika.png",
-    rank: 3,
   },
 ];
 
-const medalEmoji = ["🥇", "🥈", "🥉"];
+const medals = ["🥇", "🥈", "🥉"];
+const bgClasses = ["bg-yellow-100", "bg-gray-100", "bg-orange-100"];
 
 export default function Leaderboard() {
   return (
@@ -37,21 +34,29 @@ export default function Leaderboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {leaderboard.map((user, index) => (
-          <Card key={index} className="rounded-2xl shadow border border-muted">
+          <Card
+            key={user.name}
+            className={`rounded-2xl shadow transition hover:shadow-lg ${bgClasses[index] || "bg-muted"}`}
+          >
             <CardContent className="flex items-center gap-4 p-4">
-              <Avatar className="h-14 w-14 border">
-                <AvatarImage src={user.avatarUrl} alt={user.name} />
-                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-
-              <div className="flex-1">
-                <div className="text-lg font-semibold text-foreground">{user.name}</div>
-                <div className="text-sm text-muted-foreground">{user.department}</div>
+              <div className="relative">
+                <Avatar className="w-14 h-14 border border-muted-foreground">
+                  <AvatarImage src={user.avatarUrl} alt={user.name} />
+                  <AvatarFallback>
+                    {user.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="absolute -top-2 -right-2 text-2xl">{medals[index]}</span>
               </div>
 
-              <div className="text-right">
-                <div className="text-lg font-bold text-primary">{user.points} pts</div>
-                <div className="text-2xl">{medalEmoji[index]}</div>
+              <div className="space-y-1">
+                <h3 className="font-semibold text-lg leading-tight">{user.name}</h3>
+                <p className="text-sm text-muted-foreground">{user.department}</p>
+                <p className="text-sm font-medium text-primary">{user.points} pts</p>
               </div>
             </CardContent>
           </Card>
