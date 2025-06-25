@@ -1,4 +1,5 @@
-import "@/app/globals.css";
+// app/layout.tsx
+import "./globals.css";            // ← must be relative!
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Sidebar from "@/components/layout/Sidebar";
@@ -15,14 +16,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning className="h-full">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex min-h-screen bg-background text-foreground">
+          <div className="flex min-h-full bg-background text-foreground">
             <Sidebar />
             <div className="flex-1 flex flex-col">
               <TopBar />
-              <div className="flex-1">{children}</div>
+              <main className="flex-1 p-4 md:p-8">{children}</main>
             </div>
           </div>
         </ThemeProvider>

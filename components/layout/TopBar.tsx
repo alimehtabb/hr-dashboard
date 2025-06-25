@@ -1,8 +1,9 @@
+// components/layout/TopBar.tsx
 "use client";
 
 import React from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/Avatar";
-import  Button  from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -10,7 +11,7 @@ export default function TopBar() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between bg-background border-b border-muted px-6 py-4 shadow-sm">
+    <header className="sticky top-0 z-40 flex items-center justify-between bg-background border-b border-muted px-6 py-4 shadow-sm">
       <div className="text-sm text-muted-foreground">Management Assistant</div>
       <div className="flex items-center gap-4">
         <Button
