@@ -45,16 +45,18 @@ const topPerformersData = {
 type TabKey = keyof typeof topPerformersData;
 
 export default function TopPerformers() {
-  const [tab, setTab] = useState<TabKey>("Daily Tasks");
-
   return (
     <section className="space-y-6">
       <h2 className="text-2xl font-bold text-primary">🏅 Top Performers of the Month</h2>
 
-      <Tabs value={tab} onValueChange={(val) => setTab(val as TabKey)} className="w-full">
-        <TabsList className="mt-2 mb-4 flex flex-wrap gap-2 rounded-xl bg-muted p-2">
+      <Tabs defaultValue="Daily Tasks" className="space-y-4">
+        <TabsList className="w-full md:w-auto flex flex-wrap justify-start gap-2 bg-muted p-1 rounded-xl">
           {(Object.keys(topPerformersData) as TabKey[]).map((key) => (
-            <TabsTrigger key={key} value={key}>
+            <TabsTrigger
+              key={key}
+              value={key}
+              className="px-4 py-2 text-sm font-medium rounded-lg"
+            >
               {key}
             </TabsTrigger>
           ))}
@@ -62,11 +64,11 @@ export default function TopPerformers() {
 
         {(Object.keys(topPerformersData) as TabKey[]).map((key) => (
           <TabsContent key={key} value={key}>
-            {topPerformersData[key].length === 0 ? (
-              <p className="text-muted-foreground text-center py-4">No data available for this tab.</p>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {topPerformersData[key].map((item, idx) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {topPerformersData[key].length === 0 ? (
+                <p className="text-muted-foreground col-span-full">No data available for this tab.</p>
+              ) : (
+                topPerformersData[key].map((item, idx) => (
                   <DailyTaskCard
                     key={idx}
                     employee={item.employee}
@@ -75,9 +77,9 @@ export default function TopPerformers() {
                     colorClass={item.colorClass}
                     tasks={item.tasks}
                   />
-                ))}
-              </div>
-            )}
+                ))
+              )}
+            </div>
           </TabsContent>
         ))}
       </Tabs>

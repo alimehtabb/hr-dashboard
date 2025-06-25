@@ -56,7 +56,7 @@ export default function DashboardPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground px-4 md:px-8 py-10 space-y-16">
-      {/* Header */}
+      {/* Intro */}
       <div className="text-center space-y-2 fade-in fade-in-delay-100">
         <h1 className="text-4xl font-bold text-primary">AI-Powered HR Dashboard</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto text-base">
@@ -64,15 +64,17 @@ export default function DashboardPage() {
         </p>
       </div>
 
+      {/* Top Performers */}
       <div className="fade-in fade-in-delay-200">
         <TopPerformers />
       </div>
 
+      {/* Department Progress */}
       <div className="fade-in fade-in-delay-300">
         <DepartmentGrid />
       </div>
 
-      {/* Charts & Suggestions */}
+      {/* Performance Charts + AI Suggestions */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-muted/40 p-6 rounded-2xl shadow-sm fade-in fade-in-delay-400">
         <PerformanceOverview />
         <Card className="rounded-2xl shadow border border-muted">
@@ -83,7 +85,7 @@ export default function DashboardPage() {
         </Card>
       </section>
 
-      {/* Assign Task & Notes */}
+      {/* Task Assignment + Notes */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in fade-in-delay-500">
         <Card className="rounded-2xl shadow border border-muted">
           <CardContent className="p-6 space-y-4">
@@ -100,6 +102,7 @@ export default function DashboardPage() {
         </Card>
       </section>
 
+      {/* Task Table */}
       <section className="fade-in fade-in-delay-600">
         <Card className="rounded-2xl shadow border border-muted">
           <CardContent className="p-6">
@@ -108,14 +111,17 @@ export default function DashboardPage() {
         </Card>
       </section>
 
+      {/* Daily Tasks Grid */}
       <div className="fade-in fade-in-delay-700">
         <DailyTaskGrid />
       </div>
 
+      {/* Leaderboard */}
       <div className="fade-in fade-in-delay-800">
         <Leaderboard />
       </div>
 
+      {/* Footer Divider */}
       <hr className="border-t border-muted my-6" />
     </main>
   );

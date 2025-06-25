@@ -1,93 +1,93 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import  Button  from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import  Input  from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
+import  Label  from "@/components/ui/label";
+import Button from "@/components/ui/button";
 
-interface Task {
-  employee: string;
-  department: string;
-  task: string;
-  deadline: string;
+interface TaskAssignFormProps {
+  onSubmit: (task: {
+    employee: string;
+    department: string;
+    task: string;
+    deadline: string;
+  }) => void;
 }
 
-export default function TaskAssignForm({ onSubmit }: { onSubmit: (task: Task) => void }) {
-  const [form, setForm] = useState<Task>({
+export default function TaskAssignForm({ onSubmit }: TaskAssignFormProps) {
+  const [form, setForm] = useState({
     employee: "",
     department: "",
     task: "",
     deadline: "",
   });
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (form.employee && form.task && form.department && form.deadline) {
-      onSubmit(form);
-      setForm({ employee: "", department: "", task: "", deadline: "" });
-    }
-  }
+    if (!form.employee || !form.task || !form.deadline) return;
+    onSubmit(form);
+    setForm({ employee: "", department: "", task: "", deadline: "" });
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="employee">Employee</Label>
+          <Label htmlFor="employee">Employee Name</Label>
           <Input
-            name="employee"
             id="employee"
+            name="employee"
             value={form.employee}
             onChange={handleChange}
-            placeholder="Enter employee name"
-            className="rounded-xl"
+            required
           />
         </div>
         <div>
           <Label htmlFor="department">Department</Label>
-          <Input
-            name="department"
+          <Select
             id="department"
+            name="department"
             value={form.department}
             onChange={handleChange}
-            placeholder="e.g. HR, IT"
-            className="rounded-xl"
-          />
+            required
+          >
+            <option value="">Select...</option>
+            <option value="HR">HR</option>
+            <option value="Sales">Sales</option>
+            <option value="Marketing">Marketing</option>
+            <option value="IT">IT</option>
+            <option value="Logistics">Logistics</option>
+            <option value="Accounts">Accounts</option>
+          </Select>
         </div>
       </div>
-
       <div>
         <Label htmlFor="task">Task</Label>
-        <Textarea
-          name="task"
+        <Input
           id="task"
-          rows={3}
+          name="task"
           value={form.task}
           onChange={handleChange}
-          placeholder="Describe the task"
-          className="rounded-xl resize-none"
+          required
         />
       </div>
-
       <div>
         <Label htmlFor="deadline">Deadline</Label>
         <Input
-          name="deadline"
           id="deadline"
+          name="deadline"
           type="date"
           value={form.deadline}
           onChange={handleChange}
-          className="rounded-xl"
+          required
         />
       </div>
-
-      <Button type="submit" className="w-full rounded-xl">
+      <Button type="submit" className="w-full">
         Assign Task
       </Button>
     </form>

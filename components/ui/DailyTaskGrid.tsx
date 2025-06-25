@@ -1,60 +1,52 @@
 "use client";
 
+import React from "react";
 import DailyTaskCard from "./DailyTaskCard";
 
-const dummyDailyTasks = [
+const mockData = [
   {
-    employee: "Sarah Ahmed",
-    department: "Sales",
-    points: 950,
-    colorClass: "bg-blue-600",
-    tasks: [
-      { title: "Call 5 prospects", completed: true },
-      { title: "Send follow-up emails", completed: true },
-      { title: "Update CRM", completed: false },
-    ],
-  },
-  {
-    employee: "Zahid Hussain",
-    department: "HR",
-    points: 865,
-    colorClass: "bg-green-600",
-    tasks: [
-      { title: "Conduct onboarding", completed: false },
-      { title: "Schedule interviews", completed: false },
-      { title: "Review applications", completed: false },
-    ],
-  },
-  {
-    employee: "Ayasha Karim",
-    department: "Accounts",
-    points: 910,
-    colorClass: "bg-orange-500",
-    tasks: [
-      { title: "Reconcile accounts", completed: true },
-      { title: "Prepare invoices", completed: false },
-      { title: "Update ledger", completed: false },
-    ],
-  },
-  {
-    employee: "Hasan Chowdhury",
-    department: "Operations",
-    points: 1040,
+    employee: "Mehtab Ali",
+    department: "HR/Admin",
+    points: 78,
     colorClass: "bg-purple-600",
     tasks: [
-      { title: "Monitor production", completed: true },
-      { title: "Coordinate shipments", completed: true },
-      { title: "Check inventory", completed: true },
+      { title: "Update attendance records", completed: true },
+      { title: "Review HR policy draft", completed: false },
+    ],
+  },
+  {
+    employee: "Kamrul Islam",
+    department: "Accounts",
+    points: 88,
+    colorClass: "bg-orange-500",
+    tasks: [
+      { title: "Prepare budget summary", completed: true },
+      { title: "Review ledger entries", completed: true },
+      { title: "Send monthly report", completed: false },
+    ],
+  },
+  {
+    employee: "Nayem Hosen",
+    department: "IT",
+    points: 92,
+    colorClass: "bg-sky-600",
+    tasks: [
+      { title: "Server backup", completed: true },
+      { title: "Fix login issue", completed: false },
     ],
   },
 ];
 
-export default function DailyTasksGrid() {
+export default function DailyTaskGrid() {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {dummyDailyTasks.map((data, i) => (
-        <DailyTaskCard key={i} {...data} />
-      ))}
-    </div>
+    <section className="space-y-6">
+      <h2 className="text-2xl font-bold text-primary">✅ Daily Task Tracker</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {mockData.map((entry, idx) => (
+          <DailyTaskCard key={idx} {...entry} />
+        ))}
+      </div>
+    </section>
   );
 }

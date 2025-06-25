@@ -1,27 +1,19 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
 
-interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
-  value: number;
-  barClassName?: string;
+interface ProgressBarProps {
+  percentage: number;
+  colorClass: string;
 }
 
-export function ProgressBar({
-  value,
-  className,
-  barClassName,
-  ...props
-}: ProgressBarProps) {
+export default function ProgressBar({ percentage, colorClass }: ProgressBarProps) {
   return (
-    <div
-      className={cn("w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2", className)}
-      {...props}
-    >
+    <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
       <div
-        className={cn("h-full rounded-full transition-all", barClassName)}
-        style={{ width: `${value}%` }}
+        className={cn("h-full transition-all duration-500 ease-out", colorClass)}
+        style={{ width: `${percentage}%` }}
       />
     </div>
   );

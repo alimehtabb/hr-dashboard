@@ -1,10 +1,27 @@
-@import "tailwindcss/preflight"; /* replaces @tailwind base */
+@import "tailwindcss/preflight";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Custom theme variables */
+/* --------------------------------
+   THEME EXTENSIONS (Custom Tokens)
+-------------------------------- */
 @theme {
   --font-display: "Satoshi", sans-serif;
   --breakpoint-3xl: 1920px;
   --color-avocado-500: oklch(0.84 0.18 117.33);
 }
+
+/* --------------------------------
+   UTILITY OVERRIDES (If Needed)
+-------------------------------- */
+
+/* You can define your custom utilities here or override Tailwind’s classes 
+   for unique branding like: */
+
+/* .btn-soft {
+  @apply bg-primary/10 text-primary rounded-xl px-4 py-2 hover:bg-primary/20;
+} */
+
+/* .card-glow {
+  @apply shadow-xl border border-muted bg-white/50 backdrop-blur-lg;
+} */
