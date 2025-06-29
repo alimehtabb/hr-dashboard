@@ -1,88 +1,78 @@
+// components/dashboard/TopPerformers.tsx
 "use client";
 
 import React, { useState } from "react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/Avatar";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import DailyTaskCard from "@/components/ui/DailyTaskCard";
+import { Checkbox } from "@/components/ui/checkbox";
 
-const topPerformersData = {
-  "Daily Tasks": [
-    {
-      employee: "Sarah Ahmed",
-      department: "Sales",
-      points: 950,
-      colorClass: "bg-blue-600",
-      tasks: [
-        { title: "Call 5 prospects", completed: true },
-        { title: "Send follow-up emails", completed: true },
-        { title: "Update CRM", completed: false },
-      ],
-    },
-    {
-      employee: "Zaid Khan",
-      department: "Marketing",
-      points: 870,
-      colorClass: "bg-pink-600",
-      tasks: [
-        { title: "Post 2 stories", completed: true },
-        { title: "Coordinate ad run", completed: false },
-      ],
-    },
-    {
-      employee: "Anika Rahman",
-      department: "HR",
-      points: 820,
-      colorClass: "bg-green-600",
-      tasks: [
-        { title: "Conduct onboarding", completed: true },
-        { title: "Update attendance sheet", completed: false },
-      ],
-    },
-  ],
-  "Idea Submissions": [],
-  "Weekly Goals": [],
-};
+interface Performer {
+  id: number;
+  name: string;
+  avatar: string;
+  points: string;
+  ring: string;
+}
+const topPerformers: Performer[] = [
+  { id: 1, name: "Fatima Khan",  avatar: "/avatars/fatima.png",  points: "1.250", ring: "blue-500"  },
+  { id: 2, name: "Mehtab Ali",   avatar: "/avatars/mehtab.png",  points: "1.180", ring: "purple-500"},
+  { id: 3, name: "Ahmed Rahman", avatar: "/avatars/ahmed.png",   points: "1.150", ring: "orange-400"},
+];
 
-type TabKey = keyof typeof topPerformersData;
+interface Department {
+  name: string;
+  color: string;
+  points: number;
+  tasks: { text: string; done: boolean }[];
+}
+const departments: Department[] = [
+  /* …your department data… */
+];
+const maxPoints = Math.max(...departments.map((d) => d.points));
 
 export default function TopPerformers() {
-  return (
-    <section className="space-y-6">
-      <h2 className="text-2xl font-bold text-primary">🏅 Top Performers of the Month</h2>
+  const [tab, setTab] = useState<"daily"|"ideas"|"weekly">("daily");
 
-      <Tabs defaultValue="Daily Tasks" className="space-y-4">
-        <TabsList className="w-full md:w-auto flex flex-wrap justify-start gap-2 bg-muted p-1 rounded-xl">
-          {(Object.keys(topPerformersData) as TabKey[]).map((key) => (
-            <TabsTrigger
-              key={key}
-              value={key}
-              className="px-4 py-2 text-sm font-medium rounded-lg"
-            >
-              {key}
-            </TabsTrigger>
-          ))}
+  return (
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold">🏅 Top Performers of the Month</h2>
+        <span className="text-sm font-medium text-muted-foreground">M A Tayab Limited</span>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {topPerformers.map((p) => (
+          <Card key={p.id} className="flex items-center space-x-4 p-4">
+            <Avatar className={`h-16 w-16 ring-4 ring-${p.ring}`}>
+              <AvatarImage src={p.avatar} alt={p.name} className="h-full w-full object-cover" />
+              <AvatarFallback>{p.name.split(" ").map(w => w[0]).join("")}</AvatarFallback>
+            </Avatar>
+            <div>
+              <div className="text-lg font-medium">{p.name}</div>
+              <div className="text-sm text-muted-foreground">{p.points}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <Tabs value={tab} onValueChange={v => setTab(v as any)}>
+        <TabsList className="border-b">
+          <TabsTrigger value="daily">Daily Tasks</TabsTrigger>
+          <TabsTrigger value="ideas">Idea Submissions</TabsTrigger>
+          <TabsTrigger value="weekly">Weekly Goals</TabsTrigger>
         </TabsList>
 
-        {(Object.keys(topPerformersData) as TabKey[]).map((key) => (
-          <TabsContent key={key} value={key}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {topPerformersData[key].length === 0 ? (
-                <p className="text-muted-foreground col-span-full">No data available for this tab.</p>
-              ) : (
-                topPerformersData[key].map((item, idx) => (
-                  <DailyTaskCard
-                    key={idx}
-                    employee={item.employee}
-                    department={item.department}
-                    points={item.points}
-                    colorClass={item.colorClass}
-                    tasks={item.tasks}
-                  />
-                ))
-              )}
-            </div>
-          </TabsContent>
-        ))}
+        <TabsContent value="daily" className="py-4">
+          {/* …daily grid… */}
+        </TabsContent>
+        <TabsContent value="ideas" className="py-8 text-center text-muted-foreground">
+          No idea submissions yet.
+        </TabsContent>
+        <TabsContent value="weekly" className="py-8 text-center text-muted-foreground">
+          Weekly goals coming soon.
+        </TabsContent>
       </Tabs>
     </section>
-  );
+);
 }
