@@ -1,0 +1,143 @@
+diff --git a/app/globals.css b/app/globals.css
+index abcdef0..1234567 100644
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -68,8 +68,6 @@ @media (max-width: 768px) {
+   h4 { font-size: 1.1rem; }
+}
+
+-/* Constrain all images */
+-img { max-width: 100%; height: 50%; }
++/* Constrain all images responsibly */
++img { max-width: 100%; height: auto; }
+
+/* Optional centered container */
+.container-center {
+diff --git a/app/dashboard/page.tsx b/app/dashboard/page.tsx
+index 2345678..89abcd0 100644
+--- a/app/dashboard/page.tsx
++++ b/app/dashboard/page.tsx
+@@ -1,6 +1,13 @@
+-"use client";
++// app/dashboard/page.tsx
++"use client";
+ 
++// 1. Define a proper type instead of `any`
++interface NewTask {
++  employee: string;
++  department: string;
++  task: string;
++  deadline: string;
++}
++
+ import React, { useState } from "react";
+ import TopPerformers       from "@/components/dashboard/TopPerformers";
+ import DepartmentGrid      from "@/components/dashboard/DepartmentGrid";
+@@ -33,7 +40,7 @@ export default function DashboardPage() {
+   const handleAddTask = (task: any) => {
+     const newEntry = {
+       ...task,
+-      id: tasks.length + 1,
++      id: tasks.length + 1,
+       completed: false,
+       points: 10,
+     };
+@@ -41,7 +48,7 @@ export default function DashboardPage() {
+   };
+
+   return (
+-    <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-16">
++    <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-16">
+     {/* Header */}
+     <div className="text-center space-y-2 fade-in fade-in-delay-100">
+       <h1 className="text-4xl font-bold text-primary">
+@@ -63,7 +70,7 @@ export default function DashboardPage() {
+         Ì≥ù Assign Task
+       </h2>
+       <TaskAssignForm
+-          onSubmit={handleAddTask as any} 
++          onSubmit={handleAddTask} 
+       />
+     </CardContent>
+   </Card>
+diff --git a/components/dashboard/TopPerformers.tsx b/components/dashboard/TopPerformers.tsx
+index bcdef12..3456789 100644
+--- a/components/dashboard/TopPerformers.tsx
++++ b/components/dashboard/TopPerformers.tsx
+@@ -1,9 +1,6 @@
+-"use client";
++// components/dashboard/TopPerformers.tsx
+ "use client";
+
+-import React, { useState } from "react";
+-import { Checkbox } from "@/components/ui/checkbox";
+-import { Card, CardContent } from "@/components/ui/card";
++import React, { useState } from "react";
++import { Card } from "@/components/ui/card";
+ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+ 
+ interface Performer {
+@@ -31,13 +28,6 @@ const topPerformers: Performer[] = [
+ };
+
+-interface Department {
+-  name: string;
+-  color: string;
+-  points: number;
+-  tasks: { text: string; done: boolean }[];
+-}
+-const maxPoints = Math.max(...departments.map((d) => d.points));
+-
+ export default function TopPerformers() {
+   const [tab, setTab] = useState<"daily" | "ideas" | "weekly">("daily");
+diff --git a/components/layout/TopBar.tsx b/components/layout/TopBar.tsx
+index cdef123..4567890 100644
+--- a/components/layout/TopBar.tsx
++++ b/components/layout/TopBar.tsx
+@@ -1,6 +1,7 @@
++"// components/layout/TopBar.tsx"
+ "use client";
+
+ import React, { useEffect, useState } from "react";
+@@ -21,15 +22,24 @@ export default function TopBar() {
+   return (
+     <header className="sticky top-0 z-40 flex items-center justify-between bg-background border-b border-muted px-6 py-4 shadow-sm">
+       {/* left label */}
+-      <div className="text-sm text-muted-foreground">Management Assistant</div>
++      <div className="text-sm text-muted-foreground">Management Assistant</div>
+ 
+       {/* right: theme toggle + avatar */}
+       <div className="flex items-center gap-4">
+         {mounted && (
+           <Button
+             variant="outline"
+             size="icon"
+             onClick={() =>
+               setTheme(resolvedTheme === "light" ? "dark" : "light")
+             }
+           >
+             {resolvedTheme === "light" ? (
+               <Moon className="w-4 h-4" />
+             ) : (
+               <Sun className="w-4 h-4" />
+             )}
+           </Button>
+         )}
+-        {/* raw img removed in favor of Avatar */}
+-        <Avatar className="w-8 h-8">
+-          <AvatarImage src="/avatars/mehtab.png" alt="Mehtab Ali" />
+-          <AvatarFallback>MA</AvatarFallback>
+-        </Avatar>
++        {/* fixed 2rem√ó2rem Avatar */}
++        <Avatar className="w-8 h-8">
++          <AvatarImage
++            src="/avatars/mehtab.png"
++            alt="Mehtab Ali"
++            className="h-full w-full object-cover"
++          />
++          <AvatarFallback>MA</AvatarFallback>
++        </Avatar>
+       </div>
+     </header>
+   );
+ }
