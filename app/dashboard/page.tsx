@@ -14,6 +14,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Textarea }        from "@/components/ui/textarea";
 import Button              from "@/components/ui/button";
 
+// Define a proper type instead of `any`
+interface NewTask {
+  employee: string;
+  department: string;
+  task: string;
+  deadline: string;
+}
+
 export default function DashboardPage() {
   const [tasks, setTasks] = useState([
     {
@@ -45,8 +53,8 @@ export default function DashboardPage() {
     },
   ]);
 
-  const handleAddTask = (task: any) => {
-    setTasks(prev => [
+  const handleAddTask = (task: NewTask) => {
+    setTasks((prev) => [
       ...prev,
       { ...task, id: prev.length + 1, completed: false, points: 10 },
     ]);
@@ -56,15 +64,19 @@ export default function DashboardPage() {
     <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-16">
       {/* Header */}
       <div className="text-center space-y-2 fade-in fade-in-delay-100">
-        <h1 className="text-4xl font-bold text-primary">AI-Powered HR Dashboard</h1>
+        <h1 className="text-4xl font-bold text-primary">
+          AI-Powered HR Dashboard
+        </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto text-base">
-          Monitor performance, assign tasks, and boost productivity with AI-based insights.
+          Monitor performance, assign tasks, and boost productivity with AI-based
+          insights.
         </p>
       </div>
 
       <div className="fade-in fade-in-delay-200">
         <TopPerformers />
       </div>
+
       <div className="fade-in fade-in-delay-300">
         <DepartmentGrid />
       </div>
@@ -73,7 +85,9 @@ export default function DashboardPage() {
         <PerformanceOverview />
         <Card className="rounded-2xl shadow border border-muted">
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-2xl font-bold flex items-center gap-2 text-primary">🧠 AI Suggestions</h2>
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-primary">
+              🧠 AI Suggestions
+            </h2>
             <DepartmentSuggestions />
           </CardContent>
         </Card>
@@ -82,13 +96,17 @@ export default function DashboardPage() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in fade-in-delay-500">
         <Card className="rounded-2xl shadow border border-muted">
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-2xl font-bold flex items-center gap-2 text-primary">📝 Assign Task</h2>
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-primary">
+              📝 Assign Task
+            </h2>
             <TaskAssignForm onSubmit={handleAddTask} />
           </CardContent>
         </Card>
         <Card className="rounded-2xl shadow border border-muted">
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-2xl font-bold flex items-center gap-2 text-primary">📌 Internal Notes</h2>
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-primary">
+              📌 Internal Notes
+            </h2>
             <Textarea placeholder="Write your notes here..." rows={6} className="resize-none" />
             <Button className="w-full">Save Notes</Button>
           </CardContent>

@@ -23,11 +23,19 @@ export default function TopBar() {
             onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
             aria-label="Toggle Theme"
           >
-            {resolvedTheme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+            {resolvedTheme === "light" ? (
+              <Moon className="w-4 h-4" />
+            ) : (
+              <Sun className="w-4 h-4" />
+            )}
           </Button>
         )}
         <Avatar className="w-8 h-8">
-          <AvatarImage src="/avatars/mehtab.png" alt="Mehtab Ali" className="h-full w-full object-cover" />
+          <AvatarImage
+            src="/avatars/mehtab.png"
+            alt="Mehtab Ali"
+            className="h-full w-full object-cover"
+          />
           <AvatarFallback>MA</AvatarFallback>
         </Avatar>
       </div>
