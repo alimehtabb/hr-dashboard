@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import  Button  from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 interface Task {
@@ -14,7 +13,11 @@ interface Task {
   deadline: string;
 }
 
-export default function TaskAssignForm({ onSubmit }: { onSubmit: (task: Task) => void }) {
+export default function TaskAssignForm({
+  onSubmit,
+}: {
+  onSubmit: (task: Task) => void;
+}) {
   const [form, setForm] = useState<Task>({
     employee: "",
     department: "",
@@ -22,14 +25,21 @@ export default function TaskAssignForm({ onSubmit }: { onSubmit: (task: Task) =>
     deadline: "",
   });
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (form.employee && form.task && form.department && form.deadline) {
+    if (
+      form.employee &&
+      form.department &&
+      form.task &&
+      form.deadline
+    ) {
       onSubmit(form);
       setForm({ employee: "", department: "", task: "", deadline: "" });
     }
