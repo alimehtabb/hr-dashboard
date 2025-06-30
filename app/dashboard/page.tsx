@@ -2,61 +2,68 @@
 "use client";
 
 import React, { useState } from "react";
-import TopPerformers       from "@/components/dashboard/TopPerformers";
-import DepartmentGrid      from "@/components/dashboard/DepartmentGrid";
-import PerformanceOverview from "@/components/dashboard/PerformanceOverview";
-import Leaderboard         from "@/components/dashboard/Leaderboard";
-import DepartmentSuggestions from "@/components/ui/DepartmentSuggestions";
-import TaskAssignForm      from "@/components/ui/TaskAssignForm";
-import TaskTable           from "@/components/ui/TaskTable";
-import DailyTaskGrid       from "@/components/ui/DailyTaskGrid";
-import { Card, CardContent } from "@/components/ui/card";
-import { Textarea }        from "@/components/ui/textarea";
-import Button              from "@/components/ui/button";
 
-// Define a proper type instead of `any`
+import TopPerformers         from "@/components/dashboard/TopPerformers";
+import DepartmentGrid        from "@/components/dashboard/DepartmentGrid";
+import PerformanceOverview   from "@/components/dashboard/PerformanceOverview";
+import Leaderboard           from "@/components/dashboard/Leaderboard";
+import DepartmentSuggestions from "@/components/ui/DepartmentSuggestions";
+import TaskAssignForm        from "@/components/ui/TaskAssignForm";
+import TaskTable             from "@/components/ui/TaskTable";
+import DailyTaskGrid         from "@/components/ui/DailyTaskGrid";
+import { Card, CardContent } from "@/components/ui/card";
+import { Textarea }          from "@/components/ui/textarea";
+import Button                from "@/components/ui/button";
+
+// 1️⃣ Define a proper Task type
 interface NewTask {
-  employee: string;
+  employee:   string;
   department: string;
-  task: string;
-  deadline: string;
+  task:       string;
+  deadline:   string;
 }
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState([
     {
-      id: 1,
-      employee: "Mehtab Ali",
+      id:         1,
+      employee:   "Mehtab Ali",
       department: "HR/Admin",
-      task: "Prepare July HR report",
-      deadline: "2025-07-05",
-      completed: false,
-      points: 15,
+      task:       "Prepare July HR report",
+      deadline:   "2025-07-05",
+      completed:  false,
+      points:     15,
     },
     {
-      id: 2,
-      employee: "Kamrul Islam",
+      id:         2,
+      employee:   "Kamrul Islam",
       department: "Accounts",
-      task: "Reconcile bank payments",
-      deadline: "2025-07-03",
-      completed: true,
-      points: 20,
+      task:       "Reconcile bank payments",
+      deadline:   "2025-07-03",
+      completed:  true,
+      points:     20,
     },
     {
-      id: 3,
-      employee: "Nayem Hosen",
+      id:         3,
+      employee:   "Nayem Hosen",
       department: "IT",
-      task: "Design Eid flyer",
-      deadline: "2025-06-30",
-      completed: false,
-      points: 10,
+      task:       "Design Eid flyer",
+      deadline:   "2025-06-30",
+      completed:  false,
+      points:     10,
     },
   ]);
 
+  // 2️⃣ Tighten this function to accept NewTask
   const handleAddTask = (task: NewTask) => {
     setTasks((prev) => [
       ...prev,
-      { ...task, id: prev.length + 1, completed: false, points: 10 },
+      {
+        ...task,
+        id:        prev.length + 1,
+        completed: false,
+        points:    10,
+      },
     ]);
   };
 
@@ -81,6 +88,7 @@ export default function DashboardPage() {
         <DepartmentGrid />
       </div>
 
+      {/* Charts & Suggestions */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-muted/40 p-6 rounded-2xl shadow-sm fade-in fade-in-delay-400">
         <PerformanceOverview />
         <Card className="rounded-2xl shadow border border-muted">
@@ -93,12 +101,14 @@ export default function DashboardPage() {
         </Card>
       </section>
 
+      {/* Assign Task & Notes */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in fade-in-delay-500">
         <Card className="rounded-2xl shadow border border-muted">
           <CardContent className="p-6 space-y-4">
             <h2 className="text-2xl font-bold flex items-center gap-2 text-primary">
               📝 Assign Task
             </h2>
+            {/* 3️⃣ No more `as any` cast — this just works */}
             <TaskAssignForm onSubmit={handleAddTask} />
           </CardContent>
         </Card>
@@ -107,7 +117,11 @@ export default function DashboardPage() {
             <h2 className="text-2xl font-bold flex items-center gap-2 text-primary">
               📌 Internal Notes
             </h2>
-            <Textarea placeholder="Write your notes here..." rows={6} className="resize-none" />
+            <Textarea
+              placeholder="Write your notes here..."
+              rows={6}
+              className="resize-none"
+            />
             <Button className="w-full">Save Notes</Button>
           </CardContent>
         </Card>
