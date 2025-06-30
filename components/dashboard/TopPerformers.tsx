@@ -3,28 +3,26 @@
 import React, { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/Avatar";
 import { Card } from "@/components/ui/card";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 interface Performer {
   id: number;
   name: string;
   avatar: string;
   points: string;
-  ring: string;
+  ring: string; // e.g. "blue-500"
 }
+
 const topPerformers: Performer[] = [
-  { id: 1, name: "Fatima Khan",  avatar: "/avatars/fatima.png", points: "1,250", ring: "blue-500" },
-  { id: 2, name: "Mehtab Ali",   avatar: "/avatars/mehtab.png", points: "1,180", ring: "purple-500" },
-  { id: 3, name: "Ahmed Rahman", avatar: "/avatars/ahmed.png", points: "1,150", ring: "orange-400" },
+  { id: 1, name: "Fatima Khan",  avatar: "/avatars/fatima.png", points: "1.250", ring: "blue-500"  },
+  { id: 2, name: "Mehtab Ali",   avatar: "/avatars/mehtab.png", points: "1.180", ring: "purple-500"},
+  { id: 3, name: "Ahmed Rahman", avatar: "/avatars/ahmed.png",  points: "1.150", ring: "orange-400"},
 ];
 
+type TabValue = "daily" | "ideas" | "weekly";
+
 export default function TopPerformers() {
-  const [tab, setTab] = useState<"daily" | "ideas" | "weekly">("daily");
+  const [tab, setTab] = useState<TabValue>("daily");
 
   return (
     <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
@@ -62,14 +60,7 @@ export default function TopPerformers() {
       </div>
 
       {/* Tabs */}
-      <Tabs
-        value={tab}
-        onValueChange={(value) => {
-          if (value === "daily" || value === "ideas" || value === "weekly") {
-            setTab(value);
-          }
-        }}
-      >
+      <Tabs value={tab} onValueChange={(v) => setTab(v as TabValue)}>
         <TabsList className="border-b">
           <TabsTrigger value="daily">Daily Tasks</TabsTrigger>
           <TabsTrigger value="ideas">Idea Submissions</TabsTrigger>
@@ -77,26 +68,20 @@ export default function TopPerformers() {
         </TabsList>
 
         <TabsContent value="daily" className="py-4">
-          {/* ... your daily grid here */}
-          <div className="text-center text-muted-foreground">
-            {/* stub or your real component */}
-            Daily Tasks Grid goes here.
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {/** your daily-tasks cards here **/}
+            <p className="text-muted-foreground">Daily tasks go here…</p>
           </div>
         </TabsContent>
 
-        <TabsContent
-          value="ideas"
-          className="py-8 text-center text-muted-foreground"
-        >
+        <TabsContent value="ideas" className="py-8 text-center text-muted-foreground">
           No idea submissions yet.
         </TabsContent>
-        <TabsContent
-          value="weekly"
-          className="py-8 text-center text-muted-foreground"
-        >
+        <TabsContent value="weekly" className="py-8 text-center text-muted-foreground">
           Weekly goals coming soon.
         </TabsContent>
       </Tabs>
     </section>
   );
 }
+
